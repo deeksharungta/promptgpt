@@ -1,0 +1,39 @@
+.ellipse {
+  position: absolute;
+  top: 85%;
+  left: 85%;
+  width: 178px;
+  height: 401px;
+  transform: rotate(32.511deg);
+  flex-shrink: 0;
+  border-radius: 401px;
+  background: #0500ff;
+  filter: blur(200px);
+  z-index: -1;
+}
+
+.div {
+  position: absolute;
+  top: 90%;
+  width: 100vw;
+  height: 451px;
+  flex-shrink: 0;
+  border-radius: 1596px;
+  border: 52px solid #0500ff;
+  background: #fff;
+  filter: blur(250px);
+  z-index: -1;
+}
+
+.ellipse-2 {
+  position: absolute;
+  top: 90%;
+  border-radius: 401px;
+  background: #0f6;
+  filter: blur(200px);
+  width: 87.137px;
+  height: 401px;
+  transform: rotate(-30deg);
+  flex-shrink: 0;
+  z-index: -1;
+}

@@ -1,0 +1,129 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  .logo {
+    margin: 3.3rem 0 6.3rem 0;
+  }
+
+  .container {
+    min-width: 112rem;
+  }
+
+  .heading {
+    border-radius: 1.2rem 1.2rem 0 0;
+    width: inherit;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.6rem 2.4rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(250px);
+
+    h3 {
+      color: #f5f5ff;
+      font-family: "Work Sans", sans-serif;
+      font-size: 2.4rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 120%;
+    }
+
+    p {
+      color: rgba(255, 255, 255, 0.6);
+      font-family: "Work Sans", sans-serif;
+      font-size: 1.6rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 120%;
+    }
+  }
+
+  .input-output {
+    display: flex;
+    width: inherit;
+    height: 46.9rem;
+    position: relative;
+
+    .textarea {
+      padding: 2.4rem;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(250px);
+      align-items: flex-start;
+      flex: 1 0 0;
+      align-self: stretch;
+      border: none;
+      resize: none;
+      color: #fff;
+      font-family: "Work Sans", sans-serif;
+      font-size: 1.6rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 120%;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .img {
+      height: inherit;
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, 0);
+      z-index: 1;
+      mix-blend-mode: overlay;
+    }
+  }
+
+  .action {
+    padding: 1.4rem 2.4rem;
+    align-self: stretch;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(250px);
+    border-radius: 0 0 1.2rem 1.2rem;
+
+    button {
+      margin-left: auto;
+    }
+  }
+
+  .deploy-btn {
+    min-width: 1120px;
+    padding: 20px 16px;
+    border-radius: 12px;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.08) 100%
+    );
+    backdrop-filter: blur(38.5px);
+    border: none;
+    display: flex;
+    align-items: center;
+    margin-top: 1.8rem;
+    cursor: pointer;
+
+    span {
+      color: #fff;
+      font-size: 1.6rem;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 120%;
+      letter-spacing: -0.16px;
+      margin-left: 1.2rem;
+      margin-right: auto;
+      font-family: "Inter", sans-serif;
+    }
+
+    &:hover,
+    &:active {
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0.1) 100%
+      );
+    }
+  }
+}
