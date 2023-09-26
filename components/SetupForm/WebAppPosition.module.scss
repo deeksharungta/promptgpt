@@ -1,0 +1,28 @@
+.web-app-position {
+  width: 100%;
+  margin-top: 3.2rem;
+
+  p {
+    color: #f5f5ff;
+    font-family: "Work Sans", sans-serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 120%;
+    margin-bottom: 1.2rem;
+  }
+
+  .option {
+    display: flex;
+    gap: 1.2rem;
+
+    img:hover {
+      border-radius: 11.16px;
+      outline: 2px solid #a0c6ff;
+    }
+
+    .activeImage {
+      border-radius: 11.16px;
+      outline: 2px solid #a0c6ff;
+    }
+  }
+}

@@ -1,0 +1,50 @@
+.email-input {
+  margin-top: 3.6rem;
+  display: flex;
+  width: 54.5rem;
+  padding: 0.4rem 0.4rem 0.4rem 1.6rem;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 1.6rem;
+  border: 1px solid #a0c6ff;
+
+  input {
+    color: #fff;
+    width: 60%;
+    background: transparent;
+    border: none;
+    font-family: "Work Sans", sans-serif;
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 140%;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  button {
+    cursor: pointer;
+    padding: 1.2rem 2.4rem;
+    color: #000;
+    border: none;
+    font-family: "Work Sans", sans-serif;
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 140%;
+    border-radius: 1.2rem;
+    background: #a0c6ff;
+
+    &:hover,
+    &:active {
+      background-color: #809ecc;
+    }
+  }
+}
+
+.error-message {
+  margin-top: 1rem;
+  font-size: 1.4rem;
+  color: #ff3333;
+  font-family: "Work Sans", sans-serif;
+}

@@ -1,0 +1,53 @@
+.theme {
+  width: 100%;
+  margin-top: 3.2rem;
+
+  .heading {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.2rem;
+    align-items: center;
+    align-self: stretch;
+
+    p {
+      color: #f5f5ff;
+      font-family: "Work Sans", sans-serif;
+      font-size: 1.6rem;
+      font-weight: 500;
+      line-height: 120%;
+    }
+
+    .link:link,
+    .link:visited {
+      color: rgba(255, 255, 255, 0.6);
+      font-family: "Work Sans", sans-serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      line-height: 120%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover,
+      &:active {
+        color: rgba(255, 255, 255, 0.4);
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .option {
+    display: flex;
+    gap: 1.2rem;
+
+    img:hover {
+      border-radius: 11.16px;
+      outline: 3px solid #a0c6ff;
+    }
+
+    .activeImage {
+      border-radius: 11.16px;
+      outline: 3px solid #a0c6ff;
+    }
+  }
+}
