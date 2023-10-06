@@ -1,22 +1,32 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./Button.module.scss";
 
-const Button = () => {
-  const buttonRef = useRef(null);
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
-  const [style, setStyle] = useState({});
+type ButtonProps = {
+  onClick?: () => void;
+};
+
+const Button: React.FC<ButtonProps> = ({ onClick }) => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [width, setWidth] = useState<number>(0);
+  const [height, setHeight] = useState<number>(0);
+  const [style, setStyle] = useState<Pick<React.CSSProperties, "borderRadius">>(
+    {}
+  );
 
   useEffect(() => {
     if (buttonRef.current) {
       const button = buttonRef.current;
       setWidth(button.offsetWidth);
       setHeight(button.offsetHeight);
-      setStyle(window.getComputedStyle(button));
+      const computedStyle = window.getComputedStyle(button);
+
+      setStyle({
+        borderRadius: String(computedStyle.borderRadius),
+      });
     }
   }, [buttonRef]);
 
-  const createRectSvg = (rx, ry) => {
+  const createRectSvg = (rx: string | number, ry: string | number) => {
     return (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -27,8 +37,8 @@ const Button = () => {
           y="0"
           width={width}
           height={height}
-          rx={rx}
-          ry={ry}
+          rx={String(rx)}
+          ry={String(ry)}
           pathLength="10"
         />
       </svg>
@@ -36,10 +46,10 @@ const Button = () => {
   };
 
   return (
-    <button ref={buttonRef} className={styles.btn}>
+    <button ref={buttonRef} className={styles.btn} onClick={onClick}>
       <div className={styles.stroke}>
-        {createRectSvg(style.borderRadius, style.borderRadius)}
-        {createRectSvg(style.borderRadius, style.borderRadius)}
+        {createRectSvg(style.borderRadius || "", style.borderRadius || "")}
+        {createRectSvg(style.borderRadius || "", style.borderRadius || "")}
       </div>
       <svg
         xmlns="http://www.w3.org/2000/svg"

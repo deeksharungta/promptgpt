@@ -1,5 +1,4 @@
 .setup-form {
-  margin-top: 3.2rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -10,125 +9,6 @@
   display: flex;
   gap: 3.2rem;
   align-items: flex-start;
-  margin-bottom: 3.2rem;
-}
-
-.input-item {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.title {
-  color: #f5f5ff;
-  font-family: "Work Sans", sans-serif;
-  font-size: 1.6rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%;
-  margin-bottom: 1.2rem;
-}
-
-.input {
-  color: #fff;
-  font-family: "Work Sans", sans-serif;
-  font-size: 1.6rem;
-  font-weight: 400;
-  line-height: 120%;
-  padding: 1.6rem 0.4rem 1.6rem 1.6rem;
-  border-radius: 1.6rem;
-  border: 1px solid rgba(160, 198, 255, 0.4);
-  background: transparent;
-
-  &:focus {
-    outline: none;
-  }
-}
-
-.heading {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.link:link,
-.link:visited {
-  color: rgba(255, 255, 255, 0.6);
-  font-family: "Work Sans", sans-serif;
-  font-size: 1.4rem;
-  font-weight: 400;
-  line-height: 120%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &:hover,
-  &:active {
-    color: rgba(255, 255, 255, 0.4);
-    text-decoration: underline;
-  }
-}
-
-.prompt-textarea {
-  color: #fff;
-  font-family: "Work Sans", sans-serif;
-  font-size: 1.6rem;
-  font-weight: 400;
-  line-height: 120%;
-  height: 10.9rem;
-  padding: 1.6rem;
-  margin-bottom: 3.2rem;
-  border-radius: 2rem;
-  border: 1px solid rgba(160, 198, 255, 0.4);
-  background: transparent;
-  resize: none;
-  overflow-y: auto;
-  scrollbar-width: thin; /* For Firefox */
-
-  &:focus {
-    outline: none;
-  }
-
-  &::-webkit-scrollbar {
-    width: 4px;
-    border-radius: 2rem;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: transparent;
-    border-radius: 2rem;
-  }
-}
-
-.domain-input {
-  display: flex;
-  align-items: center;
-  border-radius: 1.6rem;
-  border: 1px solid rgba(160, 198, 255, 0.4);
-  padding: 0.4rem 0.4rem 0.4rem 1.6rem;
-
-  .input {
-    border: none;
-    width: 100%;
-    padding: 0;
-    border-radius: 0;
-  }
-
-  p {
-    color: #fff;
-    font-family: "Work Sans", sans-serif;
-    font-size: 1.6rem;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 140%;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 1.2rem;
-    padding: 1rem 2.4rem;
-  }
 }
 
 .deploy-btn {
@@ -138,6 +18,7 @@
   font-size: 2rem;
   font-weight: 500;
   line-height: 140%;
+  margin-top: 3.6rem;
 
   border: none;
   width: 100%;

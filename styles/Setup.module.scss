@@ -1,6 +1,7 @@
 .logo {
-  width: 100vw;
-  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 3.3rem;
 }
 
@@ -8,48 +9,50 @@
   display: flex;
   flex-direction: column;
   margin: 7.97rem auto 0 auto;
-  width: fit-content;
-  height: calc(100vh - 22.3px - 3.3rem - 7.97rem);
+  max-width: 99.4rem;
+  min-height: calc(100vh - 23.8px - 3.3rem - 7.97rem);
   padding: 4.8rem;
+  padding-bottom: 3.2rem;
   border-radius: 1.6rem 1.6rem 0 0;
   border: 5px solid #a0c6ff;
   border-bottom: 0;
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(50px);
-}
 
-.heading {
-  display: flex;
-  align-items: center;
-  margin-bottom: 2.4rem;
+  .heading {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2.4rem;
 
-  .title {
-    margin-right: auto;
-    color: #f5f5ff;
-    font-family: "Work Sans", sans-serif;
-    font-size: 3.2rem;
-    font-weight: 600;
-    line-height: 120%;
-  }
+    .title {
+      margin-right: auto;
+      color: #f5f5ff;
+      font-family: "Work Sans", sans-serif;
+      font-size: 3.2rem;
+      font-weight: 600;
+      line-height: 120%;
+    }
 
-  .email {
-    margin-right: 0.8rem;
-    color: #f5f5ff;
-    font-family: "Work Sans", sans-serif;
-    font-size: 1.6rem;
-    font-weight: 500;
-    line-height: 120%;
-  }
+    .email:link,
+    .email:visited {
+      margin-right: 0.8rem;
+      color: #f5f5ff;
+      font-family: "Work Sans", sans-serif;
+      font-size: 1.6rem;
+      font-weight: 500;
+      line-height: 120%;
+    }
 
-  .logout-btn {
-    color: #fd4438;
-    background: transparent;
-    cursor: pointer;
-    border: none;
-    font-family: "Work Sans", sans-serif;
-    font-size: 1.6rem;
-    font-weight: 500;
-    line-height: 120%;
+    .logout-btn {
+      color: #fd4438;
+      background: transparent;
+      cursor: pointer;
+      border: none;
+      font-family: "Work Sans", sans-serif;
+      font-size: 1.6rem;
+      font-weight: 500;
+      line-height: 120%;
+    }
   }
 }
 
