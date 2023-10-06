@@ -7,7 +7,6 @@ import Link from "next/link";
 
 export default function Theme() {
   const [theme, setTheme] = useState("light");
-  console.log(theme);
 
   return (
     <div className={styles.theme}>

@@ -4,7 +4,6 @@ import styles from "./WebAppPosition.module.scss";
 
 export default function WebAppPosition() {
   const [position, setPosition] = useState("layout1");
-  console.log(position);
 
   return (
     <div className={styles["web-app-position"]}>

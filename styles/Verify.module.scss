@@ -1,0 +1,49 @@
+.verify-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+  .error {
+    color: #fff;
+    text-align: center;
+
+    p {
+      color: #fff;
+      font-family: Work Sans;
+      font-size: 3.2rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 140%; /* 28px */
+      margin-bottom: 2rem;
+    }
+
+    a:link,
+    a:visited {
+      border-radius: 12px;
+      background: var(--Primary, #a0c6ff);
+      color: #000;
+      font-family: Work Sans;
+      font-size: 20px;
+      font-weight: 500;
+      padding: 12px 24px;
+    }
+
+    a:hover,
+    a:active {
+      background-color: #809ecc;
+    }
+  }
+
+  .success {
+    p {
+      color: #fff;
+      font-family: Work Sans;
+      font-size: 3.2rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 140%;
+      margin-bottom: 2rem;
+    }
+  }
+}

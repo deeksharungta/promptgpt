@@ -1,3 +1,17 @@
+.feedback {
+  color: #fff;
+  font-family: "Work Sans", sans-serif;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+  width: fit-content;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(160, 198, 255, 0.2);
+  margin-top: 3.6rem;
+}
+
 .email-input {
   margin-top: 3.6rem;
   display: flex;
@@ -10,7 +24,7 @@
 
   input {
     color: #fff;
-    width: 60%;
+    width: 65%;
     background: transparent;
     border: none;
     font-family: "Work Sans", sans-serif;
@@ -43,8 +57,10 @@
 }
 
 .error-message {
-  margin-top: 1rem;
-  font-size: 1.4rem;
-  color: #ff3333;
   font-family: "Work Sans", sans-serif;
+  color: #db3031;
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 120%;
+  margin-top: 0.4rem;
 }

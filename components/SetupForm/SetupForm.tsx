@@ -1,110 +1,162 @@
 import Image from "next/image";
 import styles from "./SetupForm.module.scss";
-import Link from "next/link";
-import Theme from "./Theme";
-import WebAppPosition from "./WebAppPosition";
+import Theme from "./Theme/Theme";
+import WebAppPosition from "./WebAppPosition/WebAppPosition";
+import ProjectName from "./ProjectName/ProjectName";
+import Description from "./Description/Description";
+import Prompt from "./Prompt/Prompt";
+import Domain from "./Domain/Domain";
+import OpenAPIKey from "./OpenAPIKey/OpenAPIKey";
+import { FormEvent, useContext, useState } from "react";
+import { SetupContext } from "@/store/setup-context";
+import { useRouter } from "next/router";
 
 const SetupForm = () => {
+  const { updateSetupDetails } = useContext(SetupContext);
+  const router = useRouter();
+  const [formValues, setFormValues] = useState({
+    projectName: "",
+    description: "",
+    domain: "",
+    key: "",
+    prompt: "",
+  });
+
+  const [formValidity, setFormValidity] = useState({
+    projectName: false,
+    description: false,
+    domain: false,
+    key: false,
+    prompt: false,
+  });
+
+  const setupFormSubmitHandler = (e: FormEvent) => {
+    e.preventDefault();
+    if (
+      formValidity.projectName &&
+      formValidity.description &&
+      formValidity.domain &&
+      formValidity.key &&
+      formValidity.prompt
+    ) {
+      updateSetupDetails(
+        formValues.projectName,
+        formValues.description,
+        formValues.prompt,
+        formValues.domain,
+        formValues.key
+      );
+      handleSubmit();
+      router.push(`/${formValues.domain}`);
+    } else {
+      console.log("Form is not valid");
+    }
+  };
+
+  const handleInputChange = (fieldName: string, value: string) => {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [fieldName]: value,
+    }));
+  };
+
+  const handleValidityChange = (fieldName: string, isValid: boolean) => {
+    setFormValidity((prevValidity) => ({
+      ...prevValidity,
+      [fieldName]: isValid,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    const response = await fetch("/api/deploy", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: formValues.projectName,
+        description: formValues.description,
+        prompt: formValues.prompt,
+        domain: formValues.domain,
+        key: formValues.key,
+      }),
+    });
+    if (response.ok) {
+      console.log("Success");
+    } else {
+      console.log("Error hogya");
+    }
+  };
+  // const handleSubmit = async () => {
+  //   const response = await fetch("/api/deploy", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       name: "Paraphraser",
+  //       description: "Paraphrase your text now",
+  //       prompt:
+  //         "Generate a paraphrased version of the given text. Provide a clear and coherent rephrasing while preserving the original meaning.",
+  //       domain: "paraphrase",
+  //       key: "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",
+  //     }),
+  //   });
+  //   if (response.ok) {
+  //     console.log("Success");
+  //   } else {
+  //     console.log("Error hogya");
+  //   }
+  // };
+
   return (
-    <form className={styles["setup-form"]}>
+    <form className={styles["setup-form"]} onSubmit={setupFormSubmitHandler}>
       <div>
         <div className={styles.stretch}>
-          <div className={styles["input-item"]}>
-            <label htmlFor="name" className={styles.title}>
-              Project Name
-            </label>
-            <input
-              className={styles.input}
-              type="text"
-              placeholder="Enter Project Name"
-              name="name"
-              id="name"
-            />
-          </div>
-          <div className={styles["input-item"]}>
-            <label htmlFor="description" className={styles.title}>
-              Short Description
-            </label>
-            <input
-              className={styles.input}
-              type="text"
-              placeholder="Enter a short description about the tool"
-              name="description"
-              id="description"
-            />
-          </div>
-        </div>
-        <div className={styles["input-item"]}>
-          <div className={styles.heading}>
-            <label htmlFor="prompt" className={styles.title}>
-              Personalized Prompt
-            </label>
-            <Link href="#" className={styles.link}>
-              Check Examples
-              <Image
-                src="images/arrow-right.svg"
-                width={16}
-                height={16}
-                alt="arrow-right-icon"
-              />
-            </Link>
-          </div>
-          <textarea
-            className={styles["prompt-textarea"]}
-            id="prompt"
-            placeholder="Enter your Personalized Prompt here"
-            name="prompt"
+          <ProjectName
+            onNameChange={(value) => handleInputChange("projectName", value)}
+            onValidityChange={(isValid) =>
+              handleValidityChange("projectName", isValid)
+            }
+          />
+          <Description
+            onDescriptionChange={(value) =>
+              handleInputChange("description", value)
+            }
+            onValidityChange={(isValid) =>
+              handleValidityChange("description", isValid)
+            }
           />
         </div>
+        <Prompt
+          onPromptChange={(value) => handleInputChange("prompt", value)}
+          onValidityChange={(isValid) =>
+            handleValidityChange("prompt", isValid)
+          }
+        />
         <div className={styles.stretch}>
-          <div className={styles["input-item"]}>
-            <label className={styles.title} htmlFor="domain">
-              Select Domain
-            </label>
-            <div className={styles["domain-input"]}>
-              <input
-                className={styles.input}
-                type="text"
-                placeholder="Enter domain name"
-                name="domain"
-                id="domain"
-              />
-              <p>.prompt.to</p>
-            </div>
-          </div>
-          <div className={styles["input-item"]}>
-            <div className={styles.heading}>
-              <label htmlFor="key" className={styles.title}>
-                Open API Key
-              </label>
-              <Link
-                href="https://platform.openai.com/account/api-keys"
-                className={styles.link}
-                target="_blank"
-              >
-                Where to find
-                <Image
-                  src="images/arrow-right.svg"
-                  width={16}
-                  height={16}
-                  alt="arrow-right-icon"
-                />
-              </Link>
-            </div>
-            <input
-              className={styles.input}
-              type="text"
-              placeholder="Enter API Key"
-              name="key"
-              id="key"
-            />
-          </div>
+          <Domain
+            onDomainChange={(value) => handleInputChange("domain", value)}
+            onValidityChange={(isValid) =>
+              handleValidityChange("domain", isValid)
+            }
+          />
+          <OpenAPIKey
+            onKeyChange={(value) => handleInputChange("key", value)}
+            onValidityChange={(isValid) => handleValidityChange("key", isValid)}
+          />
         </div>
-        <Image src="images/divider.svg" width={888} height={16} alt="divider" />
-        <div className={styles.stretch}>
+        <Image
+          src="images/divider.svg"
+          width={888}
+          height={16}
+          alt="divider"
+          style={{ marginTop: "3.2rem" }}
+        />
+        {/* <div className={styles.stretch}>
           <WebAppPosition />
           <Theme />
-        </div>
+        </div> */}
       </div>
       <button type="submit" className={styles["deploy-btn"]}>
         Deploy my Prompt GPT
