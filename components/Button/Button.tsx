@@ -19,7 +19,7 @@ const Button: React.FC<ButtonProps> = ({ onClick }) => {
       setWidth(button.offsetWidth);
       setHeight(button.offsetHeight);
       const computedStyle = window.getComputedStyle(button);
-      // Pick only the properties you need
+
       setStyle({
         borderRadius: String(computedStyle.borderRadius),
       });

@@ -1,9 +1,6 @@
 import Image from "next/image";
 import styles from "../styles/Home.module.scss";
 import Login from "@/components/Login/Login";
-import { useContext } from "react";
-import { UserContext } from "@/store/user-context";
-import useInput from "@/hooks/use-input";
 
 export default function HomePage() {
   return (

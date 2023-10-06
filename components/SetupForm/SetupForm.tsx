@@ -1,7 +1,5 @@
 import Image from "next/image";
 import styles from "./SetupForm.module.scss";
-import Theme from "./Theme/Theme";
-import WebAppPosition from "./WebAppPosition/WebAppPosition";
 import ProjectName from "./ProjectName/ProjectName";
 import Description from "./Description/Description";
 import Prompt from "./Prompt/Prompt";
@@ -87,27 +85,6 @@ const SetupForm = () => {
       console.log("Error hogya");
     }
   };
-  // const handleSubmit = async () => {
-  //   const response = await fetch("/api/deploy", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       name: "Paraphraser",
-  //       description: "Paraphrase your text now",
-  //       prompt:
-  //         "Generate a paraphrased version of the given text. Provide a clear and coherent rephrasing while preserving the original meaning.",
-  //       domain: "paraphrase",
-  //       key: "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",
-  //     }),
-  //   });
-  //   if (response.ok) {
-  //     console.log("Success");
-  //   } else {
-  //     console.log("Error hogya");
-  //   }
-  // };
 
   return (
     <form className={styles["setup-form"]} onSubmit={setupFormSubmitHandler}>
@@ -153,10 +130,6 @@ const SetupForm = () => {
           alt="divider"
           style={{ marginTop: "3.2rem" }}
         />
-        {/* <div className={styles.stretch}>
-          <WebAppPosition />
-          <Theme />
-        </div> */}
       </div>
       <button type="submit" className={styles["deploy-btn"]}>
         Deploy my Prompt GPT

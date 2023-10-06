@@ -10,11 +10,11 @@
 
     p {
       color: #fff;
-      font-family: Work Sans;
+      font-family: "Work Sans", sans-serif;
       font-size: 3.2rem;
       font-style: normal;
       font-weight: 500;
-      line-height: 140%; /* 28px */
+      line-height: 140%;
       margin-bottom: 2rem;
     }
 
@@ -23,7 +23,7 @@
       border-radius: 12px;
       background: var(--Primary, #a0c6ff);
       color: #000;
-      font-family: Work Sans;
+      font-family: "Work Sans", sans-serif;
       font-size: 20px;
       font-weight: 500;
       padding: 12px 24px;
@@ -38,7 +38,7 @@
   .success {
     p {
       color: #fff;
-      font-family: Work Sans;
+      font-family: "Work Sans", sans-serif;
       font-size: 3.2rem;
       font-style: normal;
       font-weight: 500;
