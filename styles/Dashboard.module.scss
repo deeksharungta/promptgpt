@@ -70,10 +70,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
-  list-style: none;
 
-  a:link,
-  a:visited {
+  .item {
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: rgba(255, 255, 255, 0.8);
@@ -85,9 +83,9 @@
     display: flex;
     justify-content: space-between;
 
-    &:hover,
-    &:active {
-      background: rgba(255, 255, 255, 0.1);
+    a:hover,
+    a:active {
+      text-decoration: underline;
     }
 
     button {

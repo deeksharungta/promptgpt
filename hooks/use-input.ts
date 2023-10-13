@@ -31,12 +31,19 @@ const inputStateReducer = (
   }
 };
 
-const useInput = (validateValue: (value: string) => boolean) => {
-  const [inputState, dispatch] = useReducer(
-    inputStateReducer,
-    initialInputState
-  );
-
+// const useInput = (validateValue: (value: string) => boolean) => {
+//   const [inputState, dispatch] = useReducer(
+//     inputStateReducer,
+//     initialInputState
+//   );
+const useInput = (
+  validateValue: (value: string) => boolean,
+  initialValue?: string
+) => {
+  const [inputState, dispatch] = useReducer(inputStateReducer, {
+    ...initialInputState,
+    value: initialValue || "",
+  });
   const valueIsValid = validateValue(inputState.value);
   const hasError = !valueIsValid && inputState.isTouched;
 

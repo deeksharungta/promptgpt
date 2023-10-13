@@ -7,11 +7,13 @@ const domainValidityCheck = (value: string) => value.trim() !== "";
 type DomainProps = {
   onDomainChange: (value: string) => void;
   onValidityChange: (isValid: boolean) => void;
+  initialDomain?: string;
 };
 
 const Domain: React.FC<DomainProps> = ({
   onDomainChange,
   onValidityChange,
+  initialDomain,
 }) => {
   const {
     value: domainValue,
@@ -20,7 +22,7 @@ const Domain: React.FC<DomainProps> = ({
     valueChangeHandler: domainChangeHandler,
     inputBlurHandler: domainBlurHandler,
     reset: resetDomain,
-  } = useInput(domainValidityCheck);
+  } = useInput(domainValidityCheck, initialDomain);
 
   useEffect(() => {
     onDomainChange(domainValue);

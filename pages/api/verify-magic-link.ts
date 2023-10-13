@@ -1,6 +1,9 @@
 import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,9 +17,23 @@ export default async function handler(
       const email = jwt.verify(token, jwtSecret) as {
         email: string;
       };
-      console.log("email", email);
+
+      const existingUser = await prisma.user.findUnique({
+        where: { email: email.email },
+      });
+
+      if (!existingUser) {
+        await prisma.user.create({
+          data: {
+            email: email.email,
+          },
+        });
+      }
+
+      const expiresIn = 7 * 24 * 60 * 60;
+
       const sessionToken = jwt.sign({ email }, jwtSecret, {
-        expiresIn: "1h",
+        expiresIn: expiresIn,
       });
 
       res.setHeader(
@@ -25,7 +42,7 @@ export default async function handler(
           httpOnly: true,
           secure: process.env.NODE_ENV !== "development",
           sameSite: "strict",
-          maxAge: 7 * 24 * 60 * 60,
+          maxAge: expiresIn,
           path: "/",
         })
       );

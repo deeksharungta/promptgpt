@@ -9,7 +9,20 @@ import { FormEvent, useContext, useState } from "react";
 import { SetupContext } from "@/store/setup-context";
 import { useRouter } from "next/router";
 
-const SetupForm = () => {
+type Project = {
+  data?: {
+    id: number;
+    name: string;
+    description: string;
+    apiKey: string;
+    domain: string;
+    prompt: string;
+    userId: number;
+  };
+  setShowEditForm?: (show: boolean) => void;
+};
+
+const SetupForm: React.FC<Project> = ({ data, setShowEditForm }) => {
   const { updateSetupDetails } = useContext(SetupContext);
   const router = useRouter();
   const [formValues, setFormValues] = useState({
@@ -31,11 +44,12 @@ const SetupForm = () => {
   const setupFormSubmitHandler = (e: FormEvent) => {
     e.preventDefault();
     if (
-      formValidity.projectName &&
-      formValidity.description &&
-      formValidity.domain &&
-      formValidity.key &&
-      formValidity.prompt
+      !!data ||
+      (formValidity.projectName &&
+        formValidity.description &&
+        formValidity.domain &&
+        formValidity.key &&
+        formValidity.prompt)
     ) {
       updateSetupDetails(
         formValues.projectName,
@@ -45,7 +59,9 @@ const SetupForm = () => {
         formValues.key
       );
       handleSubmit();
-      router.push(`/${formValues.domain}`);
+      {
+        data ? router.push(`/dashboard`) : router.push(`/${formValues.domain}`);
+      }
     } else {
       console.log("Form is not valid");
     }
@@ -66,23 +82,47 @@ const SetupForm = () => {
   };
 
   const handleSubmit = async () => {
-    const response = await fetch("/api/deploy", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: formValues.projectName,
-        description: formValues.description,
-        prompt: formValues.prompt,
-        domain: formValues.domain,
-        key: formValues.key,
-      }),
-    });
-    if (response.ok) {
-      console.log("Success");
+    if (!!data) {
+      const response = await fetch("/api/edit-project/", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: data.id,
+          name: formValues.projectName,
+          description: formValues.description,
+          prompt: formValues.prompt,
+          domain: formValues.domain,
+          key: formValues.key,
+        }),
+      });
+
+      if (response.ok) {
+        setShowEditForm && setShowEditForm(false);
+        console.log("Project updated successfully");
+      } else {
+        console.error("Project update failed");
+      }
     } else {
-      console.log("Error hogya");
+      const response = await fetch("/api/deploy", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formValues.projectName,
+          description: formValues.description,
+          prompt: formValues.prompt,
+          domain: formValues.domain,
+          key: formValues.key,
+        }),
+      });
+      if (response.ok) {
+        console.log("Success");
+      } else {
+        console.log("Error hogya");
+      }
     }
   };
 
@@ -95,6 +135,7 @@ const SetupForm = () => {
             onValidityChange={(isValid) =>
               handleValidityChange("projectName", isValid)
             }
+            initialName={data?.name || ""}
           />
           <Description
             onDescriptionChange={(value) =>
@@ -103,6 +144,7 @@ const SetupForm = () => {
             onValidityChange={(isValid) =>
               handleValidityChange("description", isValid)
             }
+            initialDescription={data?.description || ""}
           />
         </div>
         <Prompt
@@ -110,6 +152,7 @@ const SetupForm = () => {
           onValidityChange={(isValid) =>
             handleValidityChange("prompt", isValid)
           }
+          initialPrompt={data?.prompt || ""}
         />
         <div className={styles.stretch}>
           <Domain
@@ -117,10 +160,12 @@ const SetupForm = () => {
             onValidityChange={(isValid) =>
               handleValidityChange("domain", isValid)
             }
+            initialDomain={data?.domain || ""}
           />
           <OpenAPIKey
             onKeyChange={(value) => handleInputChange("key", value)}
             onValidityChange={(isValid) => handleValidityChange("key", isValid)}
+            initialKey={data?.apiKey || ""}
           />
         </div>
         <Image
@@ -131,15 +176,27 @@ const SetupForm = () => {
           style={{ marginTop: "3.2rem" }}
         />
       </div>
-      <button type="submit" className={styles["deploy-btn"]}>
-        Deploy my Prompt GPT
-        <Image
-          src="images/arrow.svg"
-          width={24}
-          height={24}
-          alt="arrow-right"
-        />
-      </button>
+      {data ? (
+        <button type="submit" className={styles["deploy-btn"]}>
+          Save Prompt GPT
+          <Image
+            src="images/arrow.svg"
+            width={24}
+            height={24}
+            alt="arrow-right"
+          />
+        </button>
+      ) : (
+        <button type="submit" className={styles["deploy-btn"]}>
+          Deploy my Prompt GPT
+          <Image
+            src="images/arrow.svg"
+            width={24}
+            height={24}
+            alt="arrow-right"
+          />
+        </button>
+      )}
     </form>
   );
 };

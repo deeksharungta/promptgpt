@@ -2,15 +2,36 @@ import Button from "@/components/Button/Button";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "../../styles/Result.module.scss";
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { SetupContext } from "@/store/setup-context";
 import { useRouter } from "next/router";
 
 const Result = () => {
-  const { setupDetails } = useContext(SetupContext);
+  const { setupDetails, updateSetupDetails } = useContext(SetupContext);
 
   const router = useRouter();
-  const domain = router.query.slug;
+  const domain = router.query.domain;
+
+  useEffect(() => {
+    const fetchProjectData = async () => {
+      try {
+        const response = await fetch(`/api/get-project?domain=${domain}`);
+
+        if (response.ok) {
+          const { name, description, prompt, domain, key } =
+            await response.json();
+
+          updateSetupDetails(name, description, prompt, domain, key);
+        } else {
+          console.error("Error fetching project");
+        }
+      } catch (error) {
+        console.error("Error fetching project", error);
+      }
+    };
+
+    fetchProjectData();
+  }, [domain]);
 
   const [messages, setMessages] = useState([
     {

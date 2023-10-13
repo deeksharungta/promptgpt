@@ -9,11 +9,13 @@ const promptValidityCheck = (value: string) => value.trim() !== "";
 type PromptProps = {
   onPromptChange: (value: string) => void;
   onValidityChange: (isValid: boolean) => void;
+  initialPrompt?: string;
 };
 
 const Prompt: React.FC<PromptProps> = ({
   onPromptChange,
   onValidityChange,
+  initialPrompt,
 }) => {
   const {
     value: promptValue,
@@ -22,7 +24,7 @@ const Prompt: React.FC<PromptProps> = ({
     valueChangeHandler: promptChangeHandler,
     inputBlurHandler: promptBlurHandler,
     reset: resetPrompt,
-  } = useInput(promptValidityCheck);
+  } = useInput(promptValidityCheck, initialPrompt);
 
   useEffect(() => {
     onPromptChange(promptValue);

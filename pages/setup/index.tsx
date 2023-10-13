@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { UserContext } from "@/store/user-context";
 import { useRouter } from "next/router";
 
-export default function Page() {
+const SetupPage: React.FC = () => {
   const { userEmail } = useContext(UserContext);
   const router = useRouter();
 
@@ -48,4 +48,6 @@ export default function Page() {
       </div>
     </main>
   );
-}
+};
+
+export default SetupPage;

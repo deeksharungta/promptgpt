@@ -1,26 +1,41 @@
 .backdrop {
   position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  background-color: rgba(255, 255, 255, 0.9);
+  width: 100vw;
+  height: 100vh;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  // cursor: url("../public/cross-icon.png"), auto;
 }
 
 .modal {
   position: fixed;
-  top: 50%;
+  bottom: 0;
   left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 rgba(0, 0, 0, 0.05);
-  z-index: 2;
-  animation: slide-down 300ms ease-out forwards;
+  transform: translate(-50%, 0);
+  z-index: 4;
+  animation: slide-up 300ms ease-out forwards;
+}
+
+.modal.close {
+  animation: slide-down 200ms ease-out forwards;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translate(-50%, 100%);
+  }
+  to {
+    transform: translate(-50%, 0);
+  }
 }
 
 @keyframes slide-down {
   from {
-    opacity: 0;
+    transform: translate(-50%, 0);
   }
   to {
-    opacity: 1;
+    transform: translate(-50%, 100%);
   }
 }
