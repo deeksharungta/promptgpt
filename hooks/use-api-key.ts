@@ -10,8 +10,8 @@ type UseApiKeyResult = {
   resetApiKey: () => void;
 };
 
-const useApiKey = (): UseApiKeyResult => {
-  const [apiKey, setApiKey] = useState<string>("");
+const useApiKey = (initialKey: string = ""): UseApiKeyResult => {
+  const [apiKey, setApiKey] = useState<string>(initialKey);
   const [apiKeyValid, setApiKeyValid] = useState<boolean>(false);
   const [apiKeyTouched, setApiKeyTouched] = useState<boolean>(false);
   const [apiKeyError, setApiKeyError] = useState<string>("");
@@ -73,7 +73,7 @@ const useApiKey = (): UseApiKeyResult => {
 
   useEffect(() => {
     apiKeyBlurHandler();
-  }, []);
+  }, [initialKey]);
 
   return {
     apiKey,

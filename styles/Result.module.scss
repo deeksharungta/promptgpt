@@ -57,10 +57,26 @@
       resize: none;
       color: #fff;
       font-family: "Work Sans", sans-serif;
+      padding-left: 3.2rem;
       font-size: 1.6rem;
       font-style: normal;
       font-weight: 400;
       line-height: 130%;
+      overflow: auto;
+
+      &::-webkit-scrollbar {
+        width: 0.4rem;
+      }
+
+      &::-webkit-scrollbar-track {
+        border-radius: 2rem;
+        background: transparent;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 2rem;
+        background: rgba(255, 255, 255, 0.2);
+      }
 
       &:focus {
         outline: none;

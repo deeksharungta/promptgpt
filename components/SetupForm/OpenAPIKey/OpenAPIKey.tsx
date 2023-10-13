@@ -8,11 +8,13 @@ import useApiKey from "@/hooks/use-api-key";
 type OpenAPIKeyProps = {
   onKeyChange: (value: string) => void;
   onValidityChange: (isValid: boolean) => void;
+  initialKey?: string;
 };
 
 const OpenAPIKey: React.FC<OpenAPIKeyProps> = ({
   onKeyChange,
   onValidityChange,
+  initialKey,
 }) => {
   const {
     apiKey: keyValue,
@@ -22,7 +24,7 @@ const OpenAPIKey: React.FC<OpenAPIKeyProps> = ({
     apiKeyBlurHandler: keyBlurHandler,
     resetApiKey: resetKey,
     apiKeyError: keyError,
-  } = useApiKey();
+  } = useApiKey(initialKey);
 
   useEffect(() => {
     onKeyChange(keyValue);

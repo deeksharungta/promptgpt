@@ -7,11 +7,13 @@ const nameValidityCheck = (value: string) => value.trim() !== "";
 type ProjectNameProps = {
   onNameChange: (value: string) => void;
   onValidityChange: (isValid: boolean) => void;
+  initialName?: string;
 };
 
 const ProjectName: React.FC<ProjectNameProps> = ({
   onNameChange,
   onValidityChange,
+  initialName,
 }) => {
   const {
     value: nameValue,
@@ -20,7 +22,7 @@ const ProjectName: React.FC<ProjectNameProps> = ({
     valueChangeHandler: nameChangeHandler,
     inputBlurHandler: nameBlurHandler,
     reset: resetName,
-  } = useInput(nameValidityCheck);
+  } = useInput(nameValidityCheck, initialName);
 
   useEffect(() => {
     onNameChange(nameValue);

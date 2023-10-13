@@ -7,11 +7,13 @@ const descriptionValidityCheck = (value: string) => value.trim() !== "";
 type DescriptionProps = {
   onDescriptionChange: (value: string) => void;
   onValidityChange: (isValid: boolean) => void;
+  initialDescription?: string;
 };
 
 const Description: React.FC<DescriptionProps> = ({
   onDescriptionChange,
   onValidityChange,
+  initialDescription,
 }) => {
   const {
     value: descriptionValue,
@@ -20,7 +22,7 @@ const Description: React.FC<DescriptionProps> = ({
     valueChangeHandler: descriptionChangeHandler,
     inputBlurHandler: descriptionBlurHandler,
     reset: resetDescription,
-  } = useInput(descriptionValidityCheck);
+  } = useInput(descriptionValidityCheck, initialDescription);
 
   useEffect(() => {
     onDescriptionChange(descriptionValue);

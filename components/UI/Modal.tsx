@@ -1,31 +1,27 @@
-import React, { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import styles from "./Modal.module.scss";
-import { createPortal } from "react-dom";
 
-interface ModalProps {
+type ModalProps = {
   onClose?: () => void;
   children?: ReactNode;
-}
-
-const Backdrop: React.FC<ModalProps> = ({ onClose }) => {
-  return <div className={styles.backdrop} onClick={onClose} />;
-};
-
-const ModalOverlay: React.FC<ModalProps> = ({ children }) => {
-  return <div className={styles.modal}>{children}</div>;
 };
 
 const Modal: React.FC<ModalProps> = ({ onClose, children }) => {
+  const [close, setClose] = useState(false);
+
+  const closeHandler = () => {
+    setClose(true);
+    setTimeout(() => {
+      onClose && onClose();
+    }, 200);
+  };
+
   return (
     <>
-      {createPortal(
-        <Backdrop onClose={onClose} />,
-        document.getElementById("overlays")!
-      )}
-      {createPortal(
-        <ModalOverlay>{children}</ModalOverlay>,
-        document.getElementById("overlays")!
-      )}
+      <div className={styles["backdrop"]} onClick={closeHandler} />
+      <div className={`${styles["modal"]} ${close ? styles.close : ""}`}>
+        {children}
+      </div>
     </>
   );
 };

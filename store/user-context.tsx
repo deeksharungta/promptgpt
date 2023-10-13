@@ -1,8 +1,12 @@
-import { createContext, useState, ReactNode } from "react";
+import { createContext, useState, ReactNode, useEffect } from "react";
 
 type UserContextType = {
   userEmail: string | null;
   updateUserEmail: (userEmail: string) => void;
+};
+
+type UserResponse = {
+  email: string;
 };
 
 const initialUserContext: UserContextType = {
@@ -20,6 +24,26 @@ export default function UserContextProvider({
   children,
 }: UserContextProviderProps) {
   const [email, setEmail] = useState<string>("");
+  useEffect(() => {
+    const fetchUserEmail = async () => {
+      try {
+        const response = await fetch("/api/get-user", {
+          method: "GET",
+        });
+
+        if (response.ok) {
+          const { email } = (await response.json()) as UserResponse;
+          setEmail(email);
+        } else {
+          console.error("Error fetching user email");
+        }
+      } catch (error) {
+        console.error("Error fetching user email", error);
+      }
+    };
+
+    fetchUserEmail();
+  }, []);
 
   function updateUserEmailHandler(userEmail: string) {
     setEmail(userEmail);
