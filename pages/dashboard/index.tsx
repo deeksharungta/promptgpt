@@ -17,7 +17,7 @@ type Project = {
 };
 
 const Page: React.FC = () => {
-  const { userEmail } = useContext(UserContext);
+  const { userEmail, updateUserEmail } = useContext(UserContext);
   const [showEditForm, setShowEditForm] = useState<boolean>(false);
   const [editProjectData, setEditProjectData] = useState<Project>();
   const [projects, setProjects] = useState<Project[]>([]);
@@ -49,6 +49,7 @@ const Page: React.FC = () => {
       });
 
       if (response.ok) {
+        updateUserEmail("");
         router.push("/");
       } else {
         console.error("Logout failed");
@@ -103,73 +104,86 @@ const Page: React.FC = () => {
     }
   };
 
-  return (
-    <main className={styles.container}>
-      <div className={styles.logo}>
-        <Link href="/">
-          <Image src="images/logo.svg" width={178} height={22.3} alt="logo" />
-        </Link>
-      </div>
-
-      <div className={styles["dashboard-page"]}>
-        <header className={styles["heading"]}>
-          <h2 className={styles.title}>
-            {showEditForm ? "Edit your PromptGPT" : "Dashboard"}
-          </h2>
-          <Link
-            href="/dashboard"
-            className={styles.email}
-            onClick={() => {
-              setShowEditForm(false);
-            }}
-          >
-            {userEmail}
+  if (typeof window === "undefined") return null;
+  if (userEmail) {
+    return (
+      <main className={styles.container}>
+        <div className={styles.logo}>
+          <Link href="/">
+            <Image src="images/logo.svg" width={178} height={22.3} alt="logo" />
           </Link>
-          <button className={styles["logout-btn"]} onClick={handleLogout}>
-            Logout
-          </button>
-        </header>
-        <Image src="images/divider.svg" width={888} height={16} alt="divider" />
-        {showEditForm ? (
-          <SetupForm data={editProjectData} setShowEditForm={setShowEditForm} />
-        ) : (
-          <>
-            <h3 className={styles["tertiary-heading"]}>Deployed PromptGPT</h3>
-            <div className={styles["inner-container"]}>
-              {projects.map((item) => (
-                <div className={styles.item} key={item.id}>
-                  <Link href={`/${item.domain}`}>{item.name}</Link>
-                  <div>
-                    <button onClick={() => handleEditProject(item.id)}>
-                      Edit
-                    </button>
-                    <button onClick={() => handleDeleteProject(item.id)}>
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <Link href="/setup" className={styles["deploy-btn"]}>
-              <Image
-                src="images/logoIcon.svg"
-                width={24}
-                height={24}
-                alt="logo"
-              />
-              <span>Deploy a PromptGPT</span>
-              <Image
-                src="images/arrow-right.svg"
-                width={24}
-                height={24}
-                alt="arrow-right"
-              />
+        </div>
+
+        <div className={styles["dashboard-page"]}>
+          <header className={styles["heading"]}>
+            <h2 className={styles.title}>
+              {showEditForm ? "Edit your PromptGPT" : "Dashboard"}
+            </h2>
+            <Link
+              href="/dashboard"
+              className={styles.email}
+              onClick={() => {
+                setShowEditForm(false);
+              }}
+            >
+              {userEmail}
             </Link>
-          </>
-        )}
-      </div>
-    </main>
-  );
+            <button className={styles["logout-btn"]} onClick={handleLogout}>
+              Logout
+            </button>
+          </header>
+          <Image
+            src="images/divider.svg"
+            width={888}
+            height={16}
+            alt="divider"
+          />
+          {showEditForm ? (
+            <SetupForm
+              data={editProjectData}
+              setShowEditForm={setShowEditForm}
+            />
+          ) : (
+            <>
+              <h3 className={styles["tertiary-heading"]}>Deployed PromptGPT</h3>
+              <div className={styles["inner-container"]}>
+                {projects.map((item) => (
+                  <div className={styles.item} key={item.id}>
+                    <Link href={`/${item.domain}`}>{item.name}</Link>
+                    <div>
+                      <button onClick={() => handleEditProject(item.id)}>
+                        Edit
+                      </button>
+                      <button onClick={() => handleDeleteProject(item.id)}>
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <Link href="/setup" className={styles["deploy-btn"]}>
+                <Image
+                  src="images/logoIcon.svg"
+                  width={24}
+                  height={24}
+                  alt="logo"
+                />
+                <span>Deploy a PromptGPT</span>
+                <Image
+                  src="images/arrow-right.svg"
+                  width={24}
+                  height={24}
+                  alt="arrow-right"
+                />
+              </Link>
+            </>
+          )}
+        </div>
+      </main>
+    );
+  } else {
+    router.push("/");
+  }
 };
 
 export default Page;

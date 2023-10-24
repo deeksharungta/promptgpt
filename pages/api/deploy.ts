@@ -37,7 +37,6 @@ export default async function handler(
     const userId = user.id;
 
     try {
-      // Assuming you have a 'Project' model
       const newProject = await prisma.project.create({
         data: {
           name,
