@@ -1,6 +1,5 @@
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useState } from "react";
 import styles from "./Login.module.scss";
-import { UserContext } from "@/store/user-context";
 import useInput from "@/hooks/use-input";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -8,7 +7,6 @@ const emailValidityCheck = (value: string) =>
   value.trim() !== "" && emailPattern.test(value);
 
 function Login() {
-  const { updateUserEmail } = useContext(UserContext);
   const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   const {
@@ -40,7 +38,6 @@ function Login() {
 
     if (response.ok) {
       console.log("Success");
-      updateUserEmail(emailValue);
     } else {
       console.log("Error hogya");
     }

@@ -7,7 +7,7 @@ import { UserContext } from "@/store/user-context";
 import { useRouter } from "next/router";
 
 const SetupPage: React.FC = () => {
-  const { userEmail } = useContext(UserContext);
+  const { userEmail, updateUserEmail } = useContext(UserContext);
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -17,6 +17,7 @@ const SetupPage: React.FC = () => {
       });
 
       if (response.ok) {
+        updateUserEmail("");
         router.push("/");
       } else {
         console.error("Logout failed");
@@ -25,29 +26,38 @@ const SetupPage: React.FC = () => {
       console.error("Logout failed", error);
     }
   };
-
-  return (
-    <main className={styles.container}>
-      <div className={styles.logo}>
-        <Link href="/">
-          <Image src="images/logo.svg" width={178} height={22.3} alt="logo" />
-        </Link>
-      </div>
-      <div className={styles["setup-page"]}>
-        <header className={styles["heading"]}>
-          <h2 className={styles.title}>Setup your GPT Profile</h2>
-          <Link href="/dashboard" className={styles.email}>
-            {userEmail}
+  if (typeof window === "undefined") return null;
+  if (userEmail) {
+    return (
+      <main className={styles.container}>
+        <div className={styles.logo}>
+          <Link href="/">
+            <Image src="images/logo.svg" width={178} height={22.3} alt="logo" />
           </Link>
-          <button className={styles["logout-btn"]} onClick={handleLogout}>
-            Logout
-          </button>
-        </header>
-        <Image src="images/divider.svg" width={888} height={16} alt="divider" />
-        <SetupForm />
-      </div>
-    </main>
-  );
+        </div>
+        <div className={styles["setup-page"]}>
+          <header className={styles["heading"]}>
+            <h2 className={styles.title}>Setup your GPT Profile</h2>
+            <Link href="/dashboard" className={styles.email}>
+              {userEmail}
+            </Link>
+            <button className={styles["logout-btn"]} onClick={handleLogout}>
+              Logout
+            </button>
+          </header>
+          <Image
+            src="images/divider.svg"
+            width={888}
+            height={16}
+            alt="divider"
+          />
+          <SetupForm />
+        </div>
+      </main>
+    );
+  } else {
+    router.push("/");
+  }
 };
 
 export default SetupPage;

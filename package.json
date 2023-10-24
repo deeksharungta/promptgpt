@@ -25,7 +25,9 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-redux": "^8.1.2",
-    "typescript": "5.2.2"
+    "redis": "^4.6.10",
+    "typescript": "5.2.2",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/cookie": "^0.5.2",
