@@ -2,6 +2,8 @@ import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
+import redis from "@/utils/redis";
+import { v4 as uuidv4 } from "uuid";
 
 const prisma = new PrismaClient();
 
@@ -36,9 +38,13 @@ export default async function handler(
         expiresIn: expiresIn,
       });
 
+      const uuidValue = uuidv4();
+      redis.set(uuidValue, sessionToken);
+      redis.expire(uuidValue, expiresIn);
+
       res.setHeader(
         "Set-Cookie",
-        serialize("auth", sessionToken, {
+        serialize("auth", uuidValue, {
           httpOnly: true,
           secure: process.env.NODE_ENV !== "development",
           sameSite: "strict",
@@ -48,7 +54,6 @@ export default async function handler(
       );
 
       res.status(200).json({ data: email, message: "Logged in successfully" });
-      res.writeHead(302, { Location: "/setup" });
       res.end();
     } catch (err) {
       res.status(401).json({ error: "Invalid token" });
