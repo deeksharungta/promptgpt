@@ -6,12 +6,12 @@ import type { AppProps } from "next/app";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <Layout>
-      <UserContextProvider>
-        <SetupContextProvider>
+    <UserContextProvider>
+      <SetupContextProvider>
+        <Layout>
           <Component {...pageProps} />
-        </SetupContextProvider>
-      </UserContextProvider>
-    </Layout>
+        </Layout>
+      </SetupContextProvider>
+    </UserContextProvider>
   );
 }

@@ -17,7 +17,7 @@ type Project = {
 };
 
 const Page: React.FC = () => {
-  const { userEmail, updateUserEmail } = useContext(UserContext);
+  const { userEmail, updateUserEmail, loading } = useContext(UserContext);
   const [showEditForm, setShowEditForm] = useState<boolean>(false);
   const [editProjectData, setEditProjectData] = useState<Project>();
   const [projects, setProjects] = useState<Project[]>([]);
@@ -104,7 +104,18 @@ const Page: React.FC = () => {
     }
   };
 
-  if (typeof window === "undefined") return null;
+  if (loading)
+    return (
+      <div>
+        <h1 style={{ color: "white" }}>loadinggg user data</h1>
+      </div>
+    );
+
+  if (!userEmail) {
+    router.push("/");
+    return null;
+  }
+
   if (userEmail) {
     return (
       <main className={styles.container}>
@@ -181,8 +192,6 @@ const Page: React.FC = () => {
         </div>
       </main>
     );
-  } else {
-    router.push("/");
   }
 };
 

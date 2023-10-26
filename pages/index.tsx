@@ -6,8 +6,15 @@ import { UserContext } from "@/store/user-context";
 import { useRouter } from "next/router";
 
 export default function HomePage() {
-  const { userEmail } = useContext(UserContext);
+  const { userEmail, loading } = useContext(UserContext);
   const router = useRouter();
+
+  if (loading)
+    return (
+      <div>
+        <h1 style={{ color: "white" }}>loadinggg user data</h1>
+      </div>
+    );
 
   if (!userEmail) {
     return (
@@ -21,7 +28,10 @@ export default function HomePage() {
         <Login />
       </main>
     );
-  } else {
+  }
+
+  if (userEmail) {
     router.push("/dashboard");
+    return null;
   }
 }
