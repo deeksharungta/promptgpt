@@ -3,8 +3,6 @@ import { createContext, useState, ReactNode, useEffect } from "react";
 type UserContextType = {
   userEmail: string | null;
   updateUserEmail: (userEmail: string) => void;
-  isAuthenticated: boolean;
-  setIsAuthenticated: (isAuthenticated: boolean) => void;
   loading: boolean;
 };
 
@@ -15,8 +13,6 @@ type UserResponse = {
 const initialUserContext: UserContextType = {
   userEmail: null,
   updateUserEmail: (userEmail: string) => {},
-  isAuthenticated: false,
-  setIsAuthenticated: (isAuthenticated: boolean) => {},
   loading: false,
 };
 
@@ -30,8 +26,7 @@ export default function UserContextProvider({
   children,
 }: UserContextProviderProps) {
   const [email, setEmail] = useState<string>("");
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserEmail = async () => {
@@ -44,7 +39,6 @@ export default function UserContextProvider({
         if (response.ok) {
           const { email } = (await response.json()) as UserResponse;
           setEmail(email);
-          setIsAuthenticated(true);
         } else {
           console.error("Error fetching user email");
         }
@@ -65,8 +59,6 @@ export default function UserContextProvider({
   const contextValue: UserContextType = {
     userEmail: email,
     updateUserEmail: updateUserEmailHandler,
-    isAuthenticated,
-    setIsAuthenticated,
     loading,
   };
 

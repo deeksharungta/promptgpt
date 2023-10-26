@@ -7,7 +7,7 @@ import { UserContext } from "@/store/user-context";
 import { useRouter } from "next/router";
 
 const SetupPage: React.FC = () => {
-  const { userEmail, updateUserEmail } = useContext(UserContext);
+  const { userEmail, updateUserEmail, loading } = useContext(UserContext);
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -26,7 +26,19 @@ const SetupPage: React.FC = () => {
       console.error("Logout failed", error);
     }
   };
-  if (typeof window === "undefined") return null;
+
+  if (loading)
+    return (
+      <main>
+        <h1 style={{ color: "white" }}>loadinggg user data</h1>
+      </main>
+    );
+
+  if (!userEmail) {
+    router.push("/");
+    return null;
+  }
+
   if (userEmail) {
     return (
       <main className={styles.container}>
@@ -55,8 +67,6 @@ const SetupPage: React.FC = () => {
         </div>
       </main>
     );
-  } else {
-    router.push("/");
   }
 };
 
