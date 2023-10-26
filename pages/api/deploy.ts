@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 import { parse } from "cookie";
 import jwt from "jsonwebtoken";
+import redis from "@/utils/redis";
 
 const prisma = new PrismaClient();
 
@@ -13,7 +14,8 @@ export default async function handler(
     const { name, description, prompt, domain, key } = req.body;
 
     const cookies = parse(req.headers.cookie || "");
-    const sessionToken = cookies.auth;
+    const uuidValue = cookies.auth;
+    const sessionToken = await redis.get(uuidValue);
     const jwtSecret = process.env.NEXT_PUBLIC_JWT_SECRET || "sdwfesbydtnfmg";
 
     if (!sessionToken) {
