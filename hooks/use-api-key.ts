@@ -1,23 +1,132 @@
-import { useState, useEffect, ChangeEvent } from "react";
+// import { useState, useEffect, ChangeEvent } from "react";
 
-type UseApiKeyResult = {
-  apiKey: string;
-  apiKeyValid: boolean;
-  apiKeyTouched: boolean;
-  apiKeyError: string;
-  apiKeyChangeHandler: (event: ChangeEvent<HTMLInputElement>) => void;
-  apiKeyBlurHandler: () => Promise<void>;
-  resetApiKey: () => void;
+// type UseApiKeyResult = {
+//   apiKey: string;
+//   apiKeyValid: boolean;
+//   apiKeyTouched: boolean;
+//   apiKeyError: string;
+//   apiKeyChangeHandler: (event: ChangeEvent<HTMLInputElement>) => void;
+//   apiKeyBlurHandler: () => Promise<void>;
+//   resetApiKey: () => void;
+// };
+
+// const useApiKey = (initialKey: string = ""): UseApiKeyResult => {
+//   const [apiKey, setApiKey] = useState<string>(initialKey);
+//   const [apiKeyValid, setApiKeyValid] = useState<boolean>(false);
+//   const [apiKeyTouched, setApiKeyTouched] = useState<boolean>(false);
+//   const [apiKeyError, setApiKeyError] = useState<string>("");
+
+//   const isAPIKeyValid = async (key: string): Promise<boolean> => {
+//     try {
+//       const response = await fetch(
+//         "https://api.openai.com/v1/chat/completions",
+//         {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//             Authorization: `Bearer ${key}`,
+//           },
+//           body: JSON.stringify({
+//             model: "gpt-3.5-turbo",
+//             messages: [
+//               { role: "system", content: "You are a helpful assistant." },
+//             ],
+//             temperature: 0.7,
+//           }),
+//         }
+//       );
+
+//       if (!response.ok) {
+//         throw new Error("Invalid API Key");
+//       }
+
+//       const result = await response.json();
+//       return result.id !== undefined;
+//     } catch (error) {
+//       return false;
+//     }
+//   };
+
+//   const apiKeyChangeHandler = (event: ChangeEvent<HTMLInputElement>): void => {
+//     setApiKey(event.target.value);
+//     setApiKeyTouched(true);
+//   };
+
+//   const apiKeyBlurHandler = async (): Promise<void> => {
+//     if (apiKey.trim() === "") {
+//       setApiKeyValid(false);
+//       setApiKeyError("API Key is required");
+//       return;
+//     }
+
+//     const isValid = await isAPIKeyValid(apiKey);
+//     setApiKeyValid(isValid);
+//     setApiKeyError(isValid ? "" : "Invalid API Key");
+//   };
+
+//   const resetApiKey = (): void => {
+//     setApiKey("");
+//     setApiKeyTouched(false);
+//     setApiKeyValid(false);
+//     setApiKeyError("");
+//   };
+
+//   useEffect(() => {
+//     apiKeyBlurHandler();
+//   }, [initialKey]);
+
+//   return {
+//     apiKey,
+//     apiKeyValid,
+//     apiKeyTouched,
+//     apiKeyError,
+//     apiKeyChangeHandler,
+//     apiKeyBlurHandler,
+//     resetApiKey,
+//   };
+// };
+
+// export default useApiKey;
+import { useReducer, ChangeEvent, useState } from "react";
+
+type InputState = {
+  value: string;
+  isTouched: boolean;
 };
 
-const useApiKey = (initialKey: string = ""): UseApiKeyResult => {
-  const [apiKey, setApiKey] = useState<string>(initialKey);
-  const [apiKeyValid, setApiKeyValid] = useState<boolean>(false);
-  const [apiKeyTouched, setApiKeyTouched] = useState<boolean>(false);
-  const [apiKeyError, setApiKeyError] = useState<string>("");
+type InputAction = {
+  type: "INPUT" | "BLUR" | "RESET";
+  value?: string;
+};
 
+const initialInputState: InputState = {
+  value: "",
+  isTouched: false,
+};
+
+const apiKeyReducer = (state: InputState, action: InputAction): InputState => {
+  switch (action.type) {
+    case "INPUT":
+      return { value: action.value || "", isTouched: state.isTouched };
+    case "BLUR":
+      return { isTouched: true, value: state.value };
+    case "RESET":
+      return { isTouched: false, value: "" };
+    default:
+      return state;
+  }
+};
+
+const useApiKey = (initialValue?: string) => {
+  const [apiKeyValid, setApiKeyValid] = useState<boolean>(false);
+  const [apiKeyError, setApiKeyError] = useState<string>("");
+  const [inputState, dispatch] = useReducer(apiKeyReducer, {
+    ...initialInputState,
+    value: initialValue || "",
+  });
   const isAPIKeyValid = async (key: string): Promise<boolean> => {
     try {
+      setApiKeyError("Verifying..");
       const response = await fetch(
         "https://api.openai.com/v1/chat/completions",
         {
@@ -36,11 +145,21 @@ const useApiKey = (initialKey: string = ""): UseApiKeyResult => {
         }
       );
 
+      const result = await response.json();
+      if (result.error) {
+        if (result.error.code === "invalid_api_key")
+          setApiKeyError("API Key is not valid");
+        else if (result.error.code === "insufficient_quota") {
+          setApiKeyError(
+            "You exceeded your current quota, please check your plan and billing details on OpenAI platform"
+          );
+        } else {
+          setApiKeyError(result.error.message);
+        }
+      }
       if (!response.ok) {
         throw new Error("Invalid API Key");
       }
-
-      const result = await response.json();
       return result.id !== undefined;
     } catch (error) {
       return false;
@@ -48,37 +167,33 @@ const useApiKey = (initialKey: string = ""): UseApiKeyResult => {
   };
 
   const apiKeyChangeHandler = (event: ChangeEvent<HTMLInputElement>): void => {
-    setApiKey(event.target.value);
-    setApiKeyTouched(true);
+    dispatch({ type: "INPUT", value: event.target.value });
   };
 
   const apiKeyBlurHandler = async (): Promise<void> => {
-    if (apiKey.trim() === "") {
-      setApiKeyValid(false);
+    dispatch({ type: "BLUR" });
+    if (inputState.value.trim() === "") {
       setApiKeyError("API Key is required");
+      setApiKeyValid(false);
       return;
     }
 
-    const isValid = await isAPIKeyValid(apiKey);
+    const isValid = await isAPIKeyValid(inputState.value);
     setApiKeyValid(isValid);
-    setApiKeyError(isValid ? "" : "Invalid API Key");
   };
 
-  const resetApiKey = (): void => {
-    setApiKey("");
-    setApiKeyTouched(false);
+  const resetApiKey = () => {
+    dispatch({ type: "RESET" });
     setApiKeyValid(false);
     setApiKeyError("");
   };
 
-  useEffect(() => {
-    apiKeyBlurHandler();
-  }, [initialKey]);
+  const hasError = inputState.isTouched && !apiKeyValid;
 
   return {
-    apiKey,
-    apiKeyValid,
-    apiKeyTouched,
+    value: inputState.value,
+    isValid: apiKeyValid,
+    hasError,
     apiKeyError,
     apiKeyChangeHandler,
     apiKeyBlurHandler,

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import styles from "./OpenAPIKey.module.scss";
 import Image from "next/image";
 import Link from "next/link";
-import useInput from "@/hooks/use-input";
 import useApiKey from "@/hooks/use-api-key";
 
 type OpenAPIKeyProps = {
@@ -17,13 +16,13 @@ const OpenAPIKey: React.FC<OpenAPIKeyProps> = ({
   initialKey,
 }) => {
   const {
-    apiKey: keyValue,
-    apiKeyValid: keyIsValid,
-    apiKeyTouched: keyIsTouched,
+    value: keyValue,
+    isValid: keyIsValid,
+    hasError: keyHasError,
+    apiKeyError,
     apiKeyChangeHandler: keyChangeHandler,
     apiKeyBlurHandler: keyBlurHandler,
     resetApiKey: resetKey,
-    apiKeyError: keyError,
   } = useApiKey(initialKey);
 
   useEffect(() => {
@@ -58,13 +57,13 @@ const OpenAPIKey: React.FC<OpenAPIKeyProps> = ({
         name="key"
         id="key"
         style={{
-          borderColor: keyIsTouched && keyError !== "" ? "#ff3333" : "",
+          borderColor: keyHasError ? "#ff3333" : "",
         }}
         onChange={keyChangeHandler}
         onBlur={keyBlurHandler}
         value={keyValue}
       />
-      {keyIsTouched && <p>{keyError}</p>}
+      {keyHasError && <p>{apiKeyError}</p>}
     </div>
   );
 };
