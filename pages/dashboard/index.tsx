@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "@/store/user-context";
 import { useRouter } from "next/router";
 import SetupForm from "@/components/SetupForm/SetupForm";
+import Loading from "@/components/Loading/Loading";
 
 type Project = {
   id: number;
@@ -104,12 +105,7 @@ const Page: React.FC = () => {
     }
   };
 
-  if (loading)
-    return (
-      <div>
-        <h1 style={{ color: "white" }}>loadinggg user data</h1>
-      </div>
-    );
+  if (loading) return <Loading />;
 
   if (!userEmail) {
     router.push("/");

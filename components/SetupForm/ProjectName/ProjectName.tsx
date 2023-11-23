@@ -32,7 +32,7 @@ const ProjectName: React.FC<ProjectNameProps> = ({
   return (
     <div className={styles["input-item"]}>
       <label htmlFor="name" className={styles.title}>
-        Project Name
+        Project Name <span>*</span>
       </label>
       <input
         className={styles.input}
@@ -45,6 +45,7 @@ const ProjectName: React.FC<ProjectNameProps> = ({
         onBlur={nameBlurHandler}
         value={nameValue}
       />
+      {nameHasError && <p>Project Name is required</p>}
     </div>
   );
 };

@@ -34,7 +34,7 @@ const OpenAPIKey: React.FC<OpenAPIKeyProps> = ({
     <div className={styles["input-item"]}>
       <div className={styles.heading}>
         <label htmlFor="key" className={styles.title}>
-          Open API Key
+          Open API Key <span>*</span>
         </label>
         <Link
           href="https://platform.openai.com/account/api-keys"

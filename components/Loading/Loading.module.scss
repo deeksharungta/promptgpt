@@ -1,0 +1,60 @@
+.loader {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  height: fit-content;
+  width: fit-content;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.rectangle1,
+.rectangle2,
+.rectangle3,
+.rectangle4 {
+  width: 4rem;
+  height: 4rem;
+  animation: Loading 3s ease-in-out infinite;
+}
+
+.rectangle1 {
+  border-radius: 8px 0 0 8px;
+  background: #a0c6ff;
+  animation-delay: 0s;
+}
+
+.rectangle2 {
+  border-radius: 10px;
+  background: rgba(160, 198, 255, 0.4);
+  animation-delay: 0.5s;
+}
+
+.rectangle3 {
+  border-radius: 10px;
+  background: rgba(160, 198, 255, 0.2);
+  animation-delay: 1.5s;
+}
+
+.rectangle4 {
+  border-radius: 0 8px 8px 0;
+  background: rgba(160, 198, 255, 0.8);
+  animation-delay: 1s;
+}
+
+@keyframes Loading {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  15%,
+  50% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  65% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

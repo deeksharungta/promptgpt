@@ -32,7 +32,7 @@ const Domain: React.FC<DomainProps> = ({
   return (
     <div className={styles["input-item"]}>
       <label className={styles.title} htmlFor="domain">
-        Select Domain
+        Select Domain <span>*</span>
       </label>
       <div
         className={styles["domain-input"]}
@@ -50,6 +50,7 @@ const Domain: React.FC<DomainProps> = ({
         />
         <p>.prompt.to</p>
       </div>
+      {domainHasError && <p>Domain is required</p>}
     </div>
   );
 };

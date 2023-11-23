@@ -4,17 +4,13 @@ import Login from "@/components/Login/Login";
 import { useContext } from "react";
 import { UserContext } from "@/store/user-context";
 import { useRouter } from "next/router";
+import Loading from "@/components/Loading/Loading";
 
 export default function HomePage() {
   const { userEmail, loading } = useContext(UserContext);
   const router = useRouter();
 
-  if (loading)
-    return (
-      <div>
-        <h1 style={{ color: "white" }}>loadinggg user data</h1>
-      </div>
-    );
+  if (loading) return <Loading />;
 
   if (!userEmail) {
     return (

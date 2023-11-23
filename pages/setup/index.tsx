@@ -5,6 +5,7 @@ import SetupForm from "@/components/SetupForm/SetupForm";
 import { useContext } from "react";
 import { UserContext } from "@/store/user-context";
 import { useRouter } from "next/router";
+import Loading from "@/components/Loading/Loading";
 
 const SetupPage: React.FC = () => {
   const { userEmail, updateUserEmail, loading } = useContext(UserContext);
@@ -27,12 +28,7 @@ const SetupPage: React.FC = () => {
     }
   };
 
-  if (loading)
-    return (
-      <main>
-        <h1 style={{ color: "white" }}>loadinggg user data</h1>
-      </main>
-    );
+  if (loading) return <Loading />;
 
   if (!userEmail) {
     router.push("/");

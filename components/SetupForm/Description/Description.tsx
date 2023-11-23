@@ -32,7 +32,7 @@ const Description: React.FC<DescriptionProps> = ({
   return (
     <div className={styles["input-item"]}>
       <label htmlFor="description" className={styles.title}>
-        Short Description
+        Short Description <span>*</span>
       </label>
       <input
         className={styles.input}
@@ -45,6 +45,7 @@ const Description: React.FC<DescriptionProps> = ({
         onBlur={descriptionBlurHandler}
         value={descriptionValue}
       />
+      {descriptionHasError && <p>Description is required</p>}
     </div>
   );
 };

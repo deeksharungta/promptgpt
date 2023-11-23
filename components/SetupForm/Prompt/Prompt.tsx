@@ -35,7 +35,7 @@ const Prompt: React.FC<PromptProps> = ({
     <div className={styles["input-item"]}>
       <div className={styles.heading}>
         <label htmlFor="prompt" className={styles.title}>
-          Personalized Prompt
+          Personalized Prompt <span>*</span>
         </label>
         <Link href="#" className={styles.link}>
           Check Examples
@@ -57,6 +57,7 @@ const Prompt: React.FC<PromptProps> = ({
         onBlur={promptBlurHandler}
         value={promptValue}
       />
+      {promptHasError && <p>Prompt is required</p>}
     </div>
   );
 };
