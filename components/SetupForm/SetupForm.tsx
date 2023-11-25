@@ -60,7 +60,9 @@ const SetupForm: React.FC<Project> = ({ data, setShowEditForm }) => {
       );
       handleSubmit();
       {
-        data ? router.push(`/dashboard`) : router.push(`/${formValues.domain}`);
+        data
+          ? router.push(`/dashboard`)
+          : router.push(`http://${formValues.domain}.localhost:3000`);
       }
     } else {
       console.log("Form is not valid");
@@ -178,7 +180,7 @@ const SetupForm: React.FC<Project> = ({ data, setShowEditForm }) => {
       </div>
       {data ? (
         <button type="submit" className={styles["deploy-btn"]}>
-          Save Prompt GPT
+          Update Prompt GPT
           <Image
             src="images/arrow.svg"
             width={24}

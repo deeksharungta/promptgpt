@@ -40,12 +40,14 @@ const ProjectName: React.FC<ProjectNameProps> = ({
         placeholder="Enter Project Name"
         name="name"
         id="name"
-        style={{ borderColor: nameHasError ? "#ff3333" : "" }}
+        style={{ borderColor: nameHasError ? "#DB3031" : "" }}
         onChange={nameChangeHandler}
         onBlur={nameBlurHandler}
         value={nameValue}
       />
-      {nameHasError && <p>Project Name is required</p>}
+      {nameHasError && (
+        <p className={styles["error-message"]}>Project Name is required</p>
+      )}
     </div>
   );
 };

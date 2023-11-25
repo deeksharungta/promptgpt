@@ -52,12 +52,14 @@ const Prompt: React.FC<PromptProps> = ({
         id="prompt"
         placeholder="Enter your Personalized Prompt here"
         name="prompt"
-        style={{ borderColor: promptHasError ? "#ff3333" : "" }}
+        style={{ borderColor: promptHasError ? "#DB3031" : "" }}
         onChange={promptChangeHandler}
         onBlur={promptBlurHandler}
         value={promptValue}
       />
-      {promptHasError && <p>Prompt is required</p>}
+      {promptHasError && (
+        <p className={styles["error-message"]}>Prompt is required</p>
+      )}
     </div>
   );
 };

@@ -7,6 +7,7 @@ const emailValidityCheck = (value: string) =>
   value.trim() !== "" && emailPattern.test(value);
 
 function Login() {
+  // const [loading, setLoading] = useState(false);
   const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   const {
@@ -20,7 +21,14 @@ function Login() {
 
   const loginFormSubmitHandler = (e: FormEvent) => {
     e.preventDefault();
+    // setLoading(true);
+    // setTimeout(() => {
+    //   setLoading(false);
+    //   setShowFeedback(true);
+    //   resetEmail();
+    // }, 1000);
     setShowFeedback(true);
+
     if (emailIsValid) {
       handleEmailSubmit(emailValue);
       resetEmail();

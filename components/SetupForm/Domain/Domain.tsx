@@ -36,7 +36,7 @@ const Domain: React.FC<DomainProps> = ({
       </label>
       <div
         className={styles["domain-input"]}
-        style={{ borderColor: domainHasError ? "#ff3333" : "" }}
+        style={{ borderColor: domainHasError ? "#DB3031" : "" }}
       >
         <input
           className={styles.input}
@@ -48,9 +48,11 @@ const Domain: React.FC<DomainProps> = ({
           onBlur={domainBlurHandler}
           value={domainValue}
         />
-        <p>.prompt.to</p>
+        <p>.promptgpt.tools</p>
       </div>
-      {domainHasError && <p>Domain is required</p>}
+      {domainHasError && (
+        <p className={styles["error-message"]}>Domain Name is required</p>
+      )}
     </div>
   );
 };

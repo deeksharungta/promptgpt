@@ -40,12 +40,14 @@ const Description: React.FC<DescriptionProps> = ({
         placeholder="Enter a short description about the tool"
         name="description"
         id="description"
-        style={{ borderColor: descriptionHasError ? "#ff3333" : "" }}
+        style={{ borderColor: descriptionHasError ? "#DB3031" : "" }}
         onChange={descriptionChangeHandler}
         onBlur={descriptionBlurHandler}
         value={descriptionValue}
       />
-      {descriptionHasError && <p>Description is required</p>}
+      {descriptionHasError && (
+        <p className={styles["error-message"]}>Description is required</p>
+      )}
     </div>
   );
 };

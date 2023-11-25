@@ -3,6 +3,14 @@
   flex-direction: column;
   width: 100%;
   margin-top: 3.2rem;
+  .error-message {
+    color: #db3031;
+    font-family: "Work Sans", sans-serif;
+    font-size: 1.2rem;
+    margin-top: 0.4rem;
+    font-weight: 500;
+    line-height: 120%;
+  }
 }
 
 .heading {
@@ -20,7 +28,7 @@
   line-height: 120%;
   margin-bottom: 1.2rem;
   span {
-    color: #d95117;
+    color: #db3031;
   }
 }
 

@@ -57,13 +57,13 @@ const OpenAPIKey: React.FC<OpenAPIKeyProps> = ({
         name="key"
         id="key"
         style={{
-          borderColor: keyHasError ? "#ff3333" : "",
+          borderColor: keyHasError ? "#DB3031" : "",
         }}
         onChange={keyChangeHandler}
         onBlur={keyBlurHandler}
         value={keyValue}
       />
-      {keyHasError && <p>{apiKeyError}</p>}
+      {keyHasError && <p className={styles["error-message"]}>{apiKeyError}</p>}
     </div>
   );
 };
