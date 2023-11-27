@@ -25,7 +25,14 @@ export default async function handler(
       from: "rungtadeeksha@gmail.com",
       to: email,
       subject: "Magic Link Authentication",
-      text: `Click the following link to log in: http://localhost:3000/verify-email/?token=${token}. The link will expire in 15 minutes.`,
+      html: `
+      <p>Hello,</p>
+      <p>You've requested to log in using a magic link.</p>
+      <p>Click <a href="http://localhost:3000/verify-email/?token=${token}">here</a> to log in.</p>
+      <p>Please note that the magic link will expire in 15 minutes for security reasons.</p>
+      <p>If you didn't request this login, you can ignore this email.</p>
+      <p>Best regards,<br/>PromptGPT</p>
+    `,
     };
 
     try {

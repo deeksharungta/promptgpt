@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import styles from "./Layout.module.scss";
 import Image from "next/image";
+import Head from "next/head";
 
 type LayoutProps = {
   children: ReactNode;
@@ -9,7 +10,12 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps) {
   return (
     <>
-      <main className={styles.main}>{children}</main>
+      <main className={styles.main}>
+        <Head>
+          <title>PromptGPT</title>
+        </Head>
+        {children}
+      </main>
       <Image
         src="/images/ellipse-3.svg"
         width={764}

@@ -106,6 +106,14 @@
       }
     }
   }
+
+  p {
+    color: #fff;
+    text-align: center;
+    font-family: "Work Sans", sans-serif;
+    grid-column: 1/-1;
+    font-size: 2rem;
+  }
 }
 
 .deploy-btn:link,

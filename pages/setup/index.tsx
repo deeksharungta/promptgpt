@@ -2,29 +2,37 @@ import Image from "next/image";
 import styles from "@/styles/Setup.module.scss";
 import Link from "next/link";
 import SetupForm from "@/components/SetupForm/SetupForm";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "@/store/user-context";
 import { useRouter } from "next/router";
 import Loading from "@/components/Loading/Loading";
+import Spinner from "@/components/Spinner/Spinner";
 
 const SetupPage: React.FC = () => {
   const { userEmail, updateUserEmail, loading } = useContext(UserContext);
   const router = useRouter();
+  const [showSpinner, setShowSpinner] = useState<boolean>(false);
 
   const handleLogout = async () => {
+    setShowSpinner(true);
     try {
-      const response = await fetch("/api/logout", {
-        method: "POST",
-      });
+      setTimeout(async () => {
+        const response = await fetch("/api/logout", {
+          method: "POST",
+        });
 
-      if (response.ok) {
-        updateUserEmail("");
-        router.push("/");
-      } else {
-        console.error("Logout failed");
-      }
+        if (response.ok) {
+          updateUserEmail("");
+          router.push("/");
+          setShowSpinner(false);
+        } else {
+          console.error("Logout failed");
+          setShowSpinner(false);
+        }
+      }, 500);
     } catch (error) {
       console.error("Logout failed", error);
+      setShowSpinner(false);
     }
   };
 
@@ -49,9 +57,13 @@ const SetupPage: React.FC = () => {
             <Link href="/dashboard" className={styles.email}>
               {userEmail}
             </Link>
-            <button className={styles["logout-btn"]} onClick={handleLogout}>
-              Logout
-            </button>
+            {showSpinner ? (
+              <Spinner color=" rgba(255, 255, 255, 0.4)" height="20px" />
+            ) : (
+              <button className={styles["logout-btn"]} onClick={handleLogout}>
+                Logout
+              </button>
+            )}
           </header>
           <Image
             src="images/divider.svg"

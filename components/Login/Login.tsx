@@ -1,13 +1,14 @@
 import { FormEvent, useState } from "react";
 import styles from "./Login.module.scss";
 import useInput from "@/hooks/use-input";
+import Spinner from "../Spinner/Spinner";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const emailValidityCheck = (value: string) =>
   value.trim() !== "" && emailPattern.test(value);
 
 function Login() {
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [showFeedback, setShowFeedback] = useState<boolean>(false);
 
   const {
@@ -21,17 +22,17 @@ function Login() {
 
   const loginFormSubmitHandler = (e: FormEvent) => {
     e.preventDefault();
-    // setLoading(true);
-    // setTimeout(() => {
-    //   setLoading(false);
-    //   setShowFeedback(true);
-    //   resetEmail();
-    // }, 1000);
-    setShowFeedback(true);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setShowFeedback(true);
+      resetEmail();
+    }, 1000);
+    // setShowFeedback(true);
 
     if (emailIsValid) {
       handleEmailSubmit(emailValue);
-      resetEmail();
+      // resetEmail();
     }
   };
 
@@ -75,7 +76,9 @@ function Login() {
             onBlur={emailBlurHandler}
             required
           />
-          <button type="submit">Get Started</button>
+          <button type="submit" disabled={loading}>
+            {loading ? <Spinner color="#000" height="30px" /> : "Get Started"}
+          </button>
         </form>
       )}
       {emailHasError && (

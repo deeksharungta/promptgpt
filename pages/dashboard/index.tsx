@@ -6,6 +6,7 @@ import { UserContext } from "@/store/user-context";
 import { useRouter } from "next/router";
 import SetupForm from "@/components/SetupForm/SetupForm";
 import Loading from "@/components/Loading/Loading";
+import Spinner from "@/components/Spinner/Spinner";
 
 type Project = {
   id: number;
@@ -22,6 +23,7 @@ const Page: React.FC = () => {
   const [showEditForm, setShowEditForm] = useState<boolean>(false);
   const [editProjectData, setEditProjectData] = useState<Project>();
   const [projects, setProjects] = useState<Project[]>([]);
+  const [showSpinner, setShowSpinner] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -44,19 +46,25 @@ const Page: React.FC = () => {
   }, []);
 
   const handleLogout = async () => {
+    setShowSpinner(true);
     try {
-      const response = await fetch("/api/logout", {
-        method: "POST",
-      });
+      setTimeout(async () => {
+        const response = await fetch("/api/logout", {
+          method: "POST",
+        });
 
-      if (response.ok) {
-        updateUserEmail("");
-        router.push("/");
-      } else {
-        console.error("Logout failed");
-      }
+        if (response.ok) {
+          updateUserEmail("");
+          router.push("/");
+          setShowSpinner(false);
+        } else {
+          console.error("Logout failed");
+          setShowSpinner(false);
+        }
+      }, 500);
     } catch (error) {
       console.error("Logout failed", error);
+      setShowSpinner(false);
     }
   };
 
@@ -135,9 +143,13 @@ const Page: React.FC = () => {
             >
               {userEmail}
             </Link>
-            <button className={styles["logout-btn"]} onClick={handleLogout}>
-              Logout
-            </button>
+            {showSpinner ? (
+              <Spinner color=" rgba(255, 255, 255, 0.4)" height="20px" />
+            ) : (
+              <button className={styles["logout-btn"]} onClick={handleLogout}>
+                Logout
+              </button>
+            )}
           </header>
           <Image
             src="images/divider.svg"
@@ -154,19 +166,23 @@ const Page: React.FC = () => {
             <>
               <h3 className={styles["tertiary-heading"]}>Deployed PromptGPT</h3>
               <div className={styles["inner-container"]}>
-                {projects.map((item) => (
-                  <div className={styles.item} key={item.id}>
-                    <Link href={`/${item.domain}`}>{item.name}</Link>
-                    <div>
-                      <button onClick={() => handleEditProject(item.id)}>
-                        Edit
-                      </button>
-                      <button onClick={() => handleDeleteProject(item.id)}>
-                        Delete
-                      </button>
+                {!!projects.length ? (
+                  projects.map((item) => (
+                    <div className={styles.item} key={item.id}>
+                      <Link href={`/${item.domain}`}>{item.name}</Link>
+                      <div>
+                        <button onClick={() => handleEditProject(item.id)}>
+                          Edit
+                        </button>
+                        <button onClick={() => handleDeleteProject(item.id)}>
+                          Delete
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  <p>No PromptGPT Found!</p>
+                )}
               </div>
               <Link href="/setup" className={styles["deploy-btn"]}>
                 <Image
