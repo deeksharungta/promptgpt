@@ -8,6 +8,7 @@ import OpenAPIKey from "./OpenAPIKey/OpenAPIKey";
 import { FormEvent, useContext, useState } from "react";
 import { SetupContext } from "@/store/setup-context";
 import { useRouter } from "next/router";
+import Spinner from "../Spinner/Spinner";
 
 type Project = {
   data?: {
@@ -25,6 +26,7 @@ type Project = {
 const SetupForm: React.FC<Project> = ({ data, setShowEditForm }) => {
   const { updateSetupDetails } = useContext(SetupContext);
   const router = useRouter();
+  const [isDeploying, setIsDeploying] = useState<boolean>(false);
   const [formValues, setFormValues] = useState({
     projectName: "",
     description: "",
@@ -43,6 +45,7 @@ const SetupForm: React.FC<Project> = ({ data, setShowEditForm }) => {
 
   const setupFormSubmitHandler = (e: FormEvent) => {
     e.preventDefault();
+    setIsDeploying(true);
     if (
       !!data ||
       (formValidity.projectName &&
@@ -59,13 +62,17 @@ const SetupForm: React.FC<Project> = ({ data, setShowEditForm }) => {
         formValues.key
       );
       handleSubmit();
-      {
-        data
-          ? router.push(`/dashboard`)
-          : router.push(`http://${formValues.domain}.localhost:3000`);
-      }
+      setTimeout(() => {
+        setIsDeploying(false);
+        {
+          data
+            ? router.push(`/dashboard`)
+            : router.push(`/${formValues.domain}`);
+        }
+      }, 1000);
     } else {
       console.log("Form is not valid");
+      setIsDeploying(false);
     }
   };
 
@@ -178,27 +185,38 @@ const SetupForm: React.FC<Project> = ({ data, setShowEditForm }) => {
           style={{ marginTop: "3.2rem" }}
         />
       </div>
-      {data ? (
-        <button type="submit" className={styles["deploy-btn"]}>
-          Update Prompt GPT
+      <button
+        type="submit"
+        className={styles["deploy-btn"]}
+        disabled={
+          isDeploying ||
+          !(
+            formValidity.projectName &&
+            formValidity.description &&
+            formValidity.domain &&
+            formValidity.key &&
+            formValidity.prompt
+          )
+        }
+      >
+        {data
+          ? isDeploying
+            ? "Updating..."
+            : "Update Prompt GPT"
+          : isDeploying
+          ? "Deploying..."
+          : "Deploy my Prompt GPT"}
+        {isDeploying ? (
+          <Spinner color="#000" height="24px" />
+        ) : (
           <Image
             src="images/arrow.svg"
             width={24}
             height={24}
             alt="arrow-right"
           />
-        </button>
-      ) : (
-        <button type="submit" className={styles["deploy-btn"]}>
-          Deploy my Prompt GPT
-          <Image
-            src="images/arrow.svg"
-            width={24}
-            height={24}
-            alt="arrow-right"
-          />
-        </button>
-      )}
+        )}
+      </button>
     </form>
   );
 };

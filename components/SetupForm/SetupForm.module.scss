@@ -31,7 +31,12 @@
   align-items: center;
 
   &:hover,
-  &:active {
+  &:active,
+  &:disabled {
     background: #809ecc;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
   }
 }
