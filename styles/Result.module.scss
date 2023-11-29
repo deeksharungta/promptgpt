@@ -64,6 +64,29 @@
       line-height: 130%;
       overflow: auto;
 
+      .copy-btn {
+        position: absolute;
+        top: 2%;
+        right: 2%;
+        padding: 0.8rem 1.2rem;
+        border-radius: 8px;
+        background: #fff;
+        border: none;
+        cursor: pointer;
+        color: #000;
+        font-size: 1.6rem;
+        font-weight: 600;
+        font-family: "Work Sans", sans-serif;
+        display: none;
+
+        &:hover,
+        &:active,
+        &:disabled {
+          background: rgba(255, 255, 255, 0.8);
+          color: rgba(0, 0, 0, 0.9);
+        }
+      }
+
       &::-webkit-scrollbar {
         width: 0.4rem;
       }

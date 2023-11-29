@@ -8,7 +8,9 @@ import { useRouter } from "next/router";
 
 const Result = () => {
   const { setupDetails, updateSetupDetails } = useContext(SetupContext);
-
+  const [copyButtonVisible, setCopyButtonVisible] = useState(false);
+  const [copySuccess, setCopySuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const domain = router.query.domain;
 
@@ -43,6 +45,19 @@ const Result = () => {
   const [output, setOutput] = useState<string>("");
   const [userMessage, setUserMessage] = useState("");
 
+  const handleCopy = () => {
+    const textToCopy = output;
+    navigator.clipboard
+      .writeText(textToCopy)
+      .then(() => {
+        setCopySuccess(true);
+        setTimeout(() => setCopySuccess(false), 2000);
+      })
+      .catch((err) => {
+        console.error("Error copying text: ", err);
+      });
+  };
+
   const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setUserMessage(event.target.value);
   };
@@ -52,6 +67,7 @@ const Result = () => {
       ...prevMessages,
       { role: "user", content: userMessage },
     ]);
+    setLoading(true);
     chatData(userMessage);
   };
 
@@ -72,6 +88,7 @@ const Result = () => {
           }),
         }
       );
+
       if (!response.ok) {
         throw new Error("Chat API request failed");
       }
@@ -87,6 +104,8 @@ const Result = () => {
       }
     } catch (error) {
       console.error("Error while fetching chat data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -101,7 +120,6 @@ const Result = () => {
           <p>{setupDetails.description}</p>
         </div>
         <div className={styles["input-output"]}>
-          {/* <button>Clear</button> */}
           <textarea
             className={styles.textarea}
             id="input"
@@ -110,6 +128,7 @@ const Result = () => {
             name="input"
             onChange={handleTextAreaChange}
           />
+
           <Image
             src="images/line.svg"
             width={48}
@@ -117,11 +136,27 @@ const Result = () => {
             alt="line-svg"
             className={styles.img}
           />
-          <div className={styles.textarea}>{output}</div>
-          {/* <button>Copy</button> */}
+          <div
+            className={styles.textarea}
+            onMouseEnter={() => setCopyButtonVisible(true)}
+            onMouseLeave={() => setCopyButtonVisible(false)}
+          >
+            {output}{" "}
+            <button
+              className={styles["copy-btn"]}
+              onClick={handleCopy}
+              style={{ display: copyButtonVisible ? "block" : "none" }}
+            >
+              {copySuccess ? "Copied!" : "Copy"}
+            </button>
+          </div>
         </div>
         <div className={styles.action}>
-          <Button onClick={handleSubmit} />
+          <Button
+            onClick={handleSubmit}
+            disabled={!userMessage.trim() || loading}
+            loading={loading}
+          />
         </div>
       </div>
       <button className={styles["deploy-btn"]}>
