@@ -1,7 +1,7 @@
 import Button from "@/components/Button/Button";
 import Image from "next/image";
 import Link from "next/link";
-import styles from "../../styles/Subdomain.module.scss";
+import styles from "./Subdomain.module.scss";
 import { ChangeEvent, useState } from "react";
 
 type SubdomainProps = {
