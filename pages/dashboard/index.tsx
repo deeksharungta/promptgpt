@@ -169,7 +169,9 @@ const Page: React.FC = () => {
                 {!!projects.length ? (
                   projects.map((item) => (
                     <div className={styles.item} key={item.id}>
-                      <Link href={`/${item.domain}`}>{item.name}</Link>
+                      <Link href={`https://${item.domain}.promptgpt.tools`}>
+                        {item.name}
+                      </Link>
                       <div>
                         <button onClick={() => handleEditProject(item.id)}>
                           Edit

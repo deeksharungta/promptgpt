@@ -1,44 +1,30 @@
 import Button from "@/components/Button/Button";
 import Image from "next/image";
 import Link from "next/link";
-import styles from "../../styles/Result.module.scss";
-import { ChangeEvent, useContext, useEffect, useState } from "react";
-import { SetupContext } from "@/store/setup-context";
-import { useRouter } from "next/router";
+import styles from "../../styles/Subdomain.module.scss";
+import { ChangeEvent, useState } from "react";
 
-const Result = () => {
-  const { setupDetails, updateSetupDetails } = useContext(SetupContext);
+type SubdomainProps = {
+  name?: string;
+  description?: string;
+  prompt?: string;
+  key?: string;
+};
+
+const Subdomain: React.FC<SubdomainProps> = ({
+  name,
+  description,
+  prompt,
+  key,
+}) => {
   const [copyButtonVisible, setCopyButtonVisible] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
-  const domain = router.query.domain;
-
-  useEffect(() => {
-    const fetchProjectData = async () => {
-      try {
-        const response = await fetch(`/api/get-project?domain=${domain}`);
-
-        if (response.ok) {
-          const { name, description, prompt, domain, key } =
-            await response.json();
-
-          updateSetupDetails(name, description, prompt, domain, key);
-        } else {
-          console.error("Error fetching project");
-        }
-      } catch (error) {
-        console.error("Error fetching project", error);
-      }
-    };
-
-    fetchProjectData();
-  }, [domain]);
 
   const [messages, setMessages] = useState([
     {
       role: "system",
-      content: setupDetails.prompt,
+      content: prompt,
     },
   ]);
 
@@ -79,7 +65,7 @@ const Result = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${setupDetails.key}`,
+            Authorization: `Bearer ${key}`,
           },
           body: JSON.stringify({
             model: "gpt-3.5-turbo",
@@ -116,14 +102,13 @@ const Result = () => {
       </Link>
       <div className={styles.container}>
         <div className={styles.heading}>
-          <h3>{setupDetails.name}</h3>
-          <p>{setupDetails.description}</p>
+          <h3>{name}</h3>
+          <p>{description}</p>
         </div>
         <div className={styles["input-output"]}>
           <textarea
             className={styles.textarea}
             id="input"
-            // type="text"
             placeholder="Please write input here to get your desired output."
             name="input"
             onChange={handleTextAreaChange}
@@ -173,4 +158,4 @@ const Result = () => {
   );
 };
 
-export default Result;
+export default Subdomain;

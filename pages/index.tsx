@@ -1,11 +1,6 @@
-import Image from "next/image";
-import styles from "../styles/Home.module.scss";
-import Login from "@/components/Login/Login";
-import { useContext } from "react";
-import { UserContext } from "@/store/user-context";
-import { useRouter } from "next/router";
-import Loading from "@/components/Loading/Loading";
 import { GetServerSideProps } from "next";
+import Home from "@/components/HomePage/Home";
+import Subdomain from "@/components/Subdomain/Subdomain";
 
 type ProjectData = {
   name: string;
@@ -14,33 +9,29 @@ type ProjectData = {
   domain: string;
   key: string;
 };
-const HomePage: React.FC<{ wildcard: string }> = ({ wildcard }) => {
-  return (
-    <div>
-      <h1>Home Page</h1>
-      <p>Wildcard value: {wildcard}</p>
-    </div>
-  );
-  // const { userEmail, loading } = useContext(UserContext);
-  // const router = useRouter();
-  // if (loading) return <Loading />;
-  // if (!userEmail) {
-  //   return (
-  //     <main className={styles["home-page"]}>
-  //       <Image src="/images/logo.svg" width={232} height={29.1} alt="logo" />
-  //       <h1 className={styles.title}>Get your prompt engineering to life</h1>
-  //       <h3 className={styles["sub-title"]}>
-  //         With Prompt GPT, you can deploy your own personalized Chat GPT for
-  //         free in 2 min.
-  //       </h3>
-  //       <Login />
-  //     </main>
-  //   );
-  // }
-  // if (userEmail) {
-  //   router.push("/dashboard");
-  //   return null;
-  // }
+
+type HomePageProps = {
+  name?: string;
+  description?: string;
+  prompt?: string;
+  domain?: string;
+  key?: string;
+  wildcard?: string;
+};
+
+const HomePage: React.FC<HomePageProps> = (props) => {
+  if (props.wildcard === "home") {
+    return <Home />;
+  } else {
+    return (
+      <Subdomain
+        name={props.name}
+        description={props.description}
+        prompt={props.prompt}
+        key={props.key}
+      />
+    );
+  }
 };
 
 export default HomePage;
@@ -48,10 +39,37 @@ export default HomePage;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   let wildcard = context?.req?.headers?.host?.split(".")[0];
   wildcard =
-    wildcard != "promptgpt"
+    wildcard != "www"
       ? wildcard != "localhost:3000"
         ? wildcard
         : "abc"
       : "home";
-  return { props: { wildcard } };
+  try {
+    const response = await fetch(`/api/get-project?domain=${wildcard}`);
+    if (response.ok) {
+      const { name, description, prompt, domain, key }: ProjectData =
+        await response.json();
+
+      return {
+        props: {
+          wildcard,
+          name,
+          description,
+          prompt,
+          domain,
+          key,
+        },
+      };
+    } else {
+      console.error("Error fetching project");
+      return {
+        notFound: true,
+      };
+    }
+  } catch (error) {
+    console.error("Error fetching project", error);
+    return {
+      notFound: true,
+    };
+  }
 };
