@@ -44,32 +44,39 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         ? wildcard
         : "abc"
       : "home";
-  try {
-    const response = await fetch(`/api/get-project?domain=${wildcard}`);
-    if (response.ok) {
-      const { name, description, prompt, domain, key }: ProjectData =
-        await response.json();
+  if (wildcard === "home") {
+    return {
+      props: {
+        wildcard,
+      },
+    };
+  } else {
+    try {
+      const response = await fetch(`/api/get-project?domain=${wildcard}`);
+      if (response.ok) {
+        const { name, description, prompt, domain, key }: ProjectData =
+          await response.json();
 
-      return {
-        props: {
-          wildcard,
-          name,
-          description,
-          prompt,
-          domain,
-          key,
-        },
-      };
-    } else {
-      console.error("Error fetching project");
+        return {
+          props: {
+            name,
+            description,
+            prompt,
+            domain,
+            key,
+          },
+        };
+      } else {
+        console.error("Error fetching project");
+        return {
+          notFound: true,
+        };
+      }
+    } catch (error) {
+      console.error("Error fetching project", error);
       return {
         notFound: true,
       };
     }
-  } catch (error) {
-    console.error("Error fetching project", error);
-    return {
-      notFound: true,
-    };
   }
 };
