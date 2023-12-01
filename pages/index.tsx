@@ -22,13 +22,7 @@ type HomePageProps = {
 const HomePage: React.FC<HomePageProps> = (props) => {
   if (props.wildcard === "home") {
     return <Home />;
-  } else if (
-    !props.name ||
-    !props.description ||
-    !props.prompt ||
-    !props.domain ||
-    !props.key
-  ) {
+  } else if (props.wildcard === "invalid") {
     return (
       <div>
         <p>This domain is not taken.</p>
@@ -53,46 +47,54 @@ const HomePage: React.FC<HomePageProps> = (props) => {
 export default HomePage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  let wildcard = context?.req?.headers?.host?.split(".")[0];
-  wildcard =
-    wildcard != "www"
-      ? wildcard != "localhost:3000"
-        ? wildcard
-        : "abc"
-      : "home";
-  if (wildcard === "home") {
+  let wildcard = context?.req?.headers?.host?.split(":")[0];
+
+  if (wildcard === "localhost") {
+    wildcard = "abc";
+  }
+
+  if (wildcard === "www") {
     return {
-      props: {
-        wildcard,
+      redirect: {
+        destination: "https://www.promptgpt.tools",
+        permanent: false,
       },
     };
-  } else {
-    try {
-      const response = await fetch(`/api/get-project?domain=${wildcard}`);
-      if (response.ok) {
-        const { name, description, prompt, domain, key }: ProjectData =
-          await response.json();
+  }
 
+  try {
+    const response = await fetch(`/api/get-project?domain=${wildcard}`);
+    if (response.ok) {
+      const { name, description, prompt, domain, key }: ProjectData =
+        await response.json();
+
+      if (!name || !description || !prompt || !domain || !key) {
         return {
           props: {
-            name,
-            description,
-            prompt,
-            domain,
-            key,
+            wildcard: "invalid",
           },
         };
-      } else {
-        console.error("Error fetching project");
-        return {
-          notFound: true,
-        };
       }
-    } catch (error) {
-      console.error("Error fetching project", error);
+
+      return {
+        props: {
+          name,
+          description,
+          prompt,
+          domain,
+          key,
+        },
+      };
+    } else {
+      console.error("Error fetching project");
       return {
         notFound: true,
       };
     }
+  } catch (error) {
+    console.error("Error fetching project", error);
+    return {
+      notFound: true,
+    };
   }
 };
