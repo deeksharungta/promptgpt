@@ -22,6 +22,22 @@ type HomePageProps = {
 const HomePage: React.FC<HomePageProps> = (props) => {
   if (props.wildcard === "home") {
     return <Home />;
+  } else if (
+    !props.name ||
+    !props.description ||
+    !props.prompt ||
+    !props.domain ||
+    !props.key
+  ) {
+    return (
+      <div>
+        <p>This domain is not taken.</p>
+        <p>
+          Create your PromptGPT on this domain{" "}
+          <a href="https://www.promptgpt.tools">here</a>.
+        </p>
+      </div>
+    );
   } else {
     return (
       <Subdomain
