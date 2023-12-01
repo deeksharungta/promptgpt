@@ -32,9 +32,7 @@ export default function UserContextProvider({
     const fetchUserEmail = async () => {
       setLoading(true);
       try {
-        const response = await fetch("/api/get-user", {
-          method: "GET",
-        });
+        const response = await fetch("/api/get-user");
 
         if (response.ok) {
           const { email } = (await response.json()) as UserResponse;
