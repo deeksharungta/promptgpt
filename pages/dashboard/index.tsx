@@ -24,13 +24,13 @@ const Page: React.FC = () => {
   const [editProjectData, setEditProjectData] = useState<Project>();
   const [projects, setProjects] = useState<Project[]>([]);
   const [showSpinner, setShowSpinner] = useState<boolean>(false);
+  const [loadingProjects, setLoadingProjects] = useState<boolean>(true);
   const router = useRouter();
 
   useEffect(() => {
-    const fetchUserEmail = async () => {
+    const fetchUserProjects = async () => {
       try {
         const response = await fetch("/api/get-projects");
-
         if (response.ok) {
           const { projects } = await response.json();
           setProjects(projects);
@@ -39,10 +39,11 @@ const Page: React.FC = () => {
         }
       } catch (error) {
         console.error("Error fetching user email", error);
+      } finally {
+        setLoadingProjects(false);
       }
     };
-
-    fetchUserEmail();
+    fetchUserProjects();
   }, []);
 
   const handleLogout = async () => {
@@ -166,24 +167,34 @@ const Page: React.FC = () => {
             <>
               <h3 className={styles["tertiary-heading"]}>Deployed PromptGPT</h3>
               <div className={styles["inner-container"]}>
-                {!!projects.length ? (
-                  projects.map((item) => (
-                    <div className={styles.item} key={item.id}>
-                      <Link href={`https://${item.domain}.promptgpt.tools`}>
-                        {item.name}
-                      </Link>
-                      <div>
-                        <button onClick={() => handleEditProject(item.id)}>
-                          Edit
-                        </button>
-                        <button onClick={() => handleDeleteProject(item.id)}>
-                          Delete
-                        </button>
-                      </div>
-                    </div>
-                  ))
+                {loadingProjects ? (
+                  <div className={styles.loader}>
+                    <Spinner color=" rgb(255, 255, 255)" height="30px" />
+                  </div>
                 ) : (
-                  <p>No PromptGPT Found!</p>
+                  <>
+                    {!!projects.length ? (
+                      projects.map((item) => (
+                        <div className={styles.item} key={item.id}>
+                          <Link href={`https://${item.domain}.promptgpt.tools`}>
+                            {item.name}
+                          </Link>
+                          <div>
+                            <button onClick={() => handleEditProject(item.id)}>
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteProject(item.id)}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <p>No PromptGPT Found!</p>
+                    )}
+                  </>
                 )}
               </div>
               <Link href="/setup" className={styles["deploy-btn"]}>
