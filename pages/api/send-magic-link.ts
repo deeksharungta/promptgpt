@@ -28,7 +28,7 @@ export default async function handler(
       html: `
       <p>Hello,</p>
       <p>You've requested to log in using a magic link.</p>
-      <p>Click <a href="http://localhost:3000/verify-email/?token=${token}">here</a> to log in.</p>
+      <p>Click <a href="https://www.promptgpt.tools/verify-email/?token=${token}">here</a> to log in.</p>
       <p>Please note that the magic link will expire in 15 minutes for security reasons.</p>
       <p>If you didn't request this login, you can ignore this email.</p>
       <p>Best regards,<br/>PromptGPT</p>
