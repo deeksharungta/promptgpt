@@ -20,7 +20,7 @@ body {
 
 body {
   font-family: "Work Sans", sans-serif;
-  background: url("../public/images/background.svg");
+  background: url("/images/background-v2.svg");
   background-attachment: fixed;
   background-color: #000;
 }
