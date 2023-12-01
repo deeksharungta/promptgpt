@@ -22,16 +22,6 @@ type HomePageProps = {
 const HomePage: React.FC<HomePageProps> = (props) => {
   if (props.wildcard === "home") {
     return <Home />;
-  } else if (props.wildcard === "invalid") {
-    return (
-      <div>
-        <p>This domain is not taken.</p>
-        <p>
-          Create your PromptGPT on this domain{" "}
-          <a href="https://www.promptgpt.tools">here</a>.
-        </p>
-      </div>
-    );
   } else {
     return (
       <Subdomain
@@ -47,17 +37,14 @@ const HomePage: React.FC<HomePageProps> = (props) => {
 export default HomePage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  let wildcard = context?.req?.headers?.host?.split(":")[0];
-
-  if (wildcard === "localhost") {
-    wildcard = "abc";
-    return {
-      props: {
-        wildcard,
-      },
-    };
-  } else if (wildcard === "www") {
-    wildcard = "home";
+  let wildcard = context?.req?.headers?.host?.split(".")[0];
+  wildcard =
+    wildcard != "www"
+      ? wildcard != "localhost:3000"
+        ? wildcard
+        : "abc"
+      : "home";
+  if (wildcard === "home") {
     return {
       props: {
         wildcard,
@@ -69,14 +56,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       if (response.ok) {
         const { name, description, prompt, domain, key }: ProjectData =
           await response.json();
-
-        if (!name || !description || !prompt || !domain || !key) {
-          return {
-            props: {
-              wildcard: "invalid",
-            },
-          };
-        }
 
         return {
           props: {
