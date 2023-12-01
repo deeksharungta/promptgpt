@@ -51,50 +51,53 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   if (wildcard === "localhost") {
     wildcard = "abc";
-  }
-
-  if (wildcard === "www") {
     return {
-      redirect: {
-        destination: "https://www.promptgpt.tools",
-        permanent: false,
+      props: {
+        wildcard,
       },
     };
-  }
+  } else if (wildcard === "www") {
+    wildcard = "home";
+    return {
+      props: {
+        wildcard,
+      },
+    };
+  } else {
+    try {
+      const response = await fetch(`/api/get-project?domain=${wildcard}`);
+      if (response.ok) {
+        const { name, description, prompt, domain, key }: ProjectData =
+          await response.json();
 
-  try {
-    const response = await fetch(`/api/get-project?domain=${wildcard}`);
-    if (response.ok) {
-      const { name, description, prompt, domain, key }: ProjectData =
-        await response.json();
+        if (!name || !description || !prompt || !domain || !key) {
+          return {
+            props: {
+              wildcard: "invalid",
+            },
+          };
+        }
 
-      if (!name || !description || !prompt || !domain || !key) {
         return {
           props: {
-            wildcard: "invalid",
+            name,
+            description,
+            prompt,
+            domain,
+            key,
           },
         };
+      } else {
+        console.error("Error fetching project");
+        return {
+          notFound: true,
+        };
       }
-
-      return {
-        props: {
-          name,
-          description,
-          prompt,
-          domain,
-          key,
-        },
-      };
-    } else {
-      console.error("Error fetching project");
+    } catch (error) {
+      console.error("Error fetching project", error);
       return {
         notFound: true,
       };
     }
-  } catch (error) {
-    console.error("Error fetching project", error);
-    return {
-      notFound: true,
-    };
   }
 };
