@@ -1,8 +1,6 @@
-import useInput from "@/hooks/use-input";
 import styles from "./Domain.module.scss";
 import { useEffect } from "react";
-
-const domainValidityCheck = (value: string) => value.trim() !== "";
+import useDomain from "@/hooks/use-domain";
 
 type DomainProps = {
   onDomainChange: (value: string) => void;
@@ -19,10 +17,11 @@ const Domain: React.FC<DomainProps> = ({
     value: domainValue,
     isValid: domainIsValid,
     hasError: domainHasError,
+    errorMessage,
     valueChangeHandler: domainChangeHandler,
     inputBlurHandler: domainBlurHandler,
     reset: resetDomain,
-  } = useInput(domainValidityCheck, initialDomain);
+  } = useDomain(initialDomain);
 
   useEffect(() => {
     onDomainChange(domainValue);
@@ -36,7 +35,13 @@ const Domain: React.FC<DomainProps> = ({
       </label>
       <div
         className={styles["domain-input"]}
-        style={{ borderColor: domainHasError ? "#DB3031" : "" }}
+        style={{
+          borderColor: domainHasError
+            ? errorMessage === "Verifying..."
+              ? ""
+              : "#DB3031"
+            : "",
+        }}
       >
         <input
           className={styles.input}
@@ -51,7 +56,12 @@ const Domain: React.FC<DomainProps> = ({
         <p>.promptgpt.tools</p>
       </div>
       {domainHasError && (
-        <p className={styles["error-message"]}>Domain Name is required</p>
+        <p
+          style={{ color: errorMessage === "Verifying..." ? "#fff" : "" }}
+          className={styles["error-message"]}
+        >
+          {errorMessage}
+        </p>
       )}
     </div>
   );
