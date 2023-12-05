@@ -7,6 +7,8 @@ import { useRouter } from "next/router";
 import SetupForm from "@/components/SetupForm/SetupForm";
 import Loading from "@/components/Loading/Loading";
 import Spinner from "@/components/Spinner/Spinner";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type Project = {
   id: number;
@@ -35,10 +37,10 @@ const Page: React.FC = () => {
           const { projects } = await response.json();
           setProjects(projects);
         } else {
-          console.error("Error fetching user email");
+          console.error("Error fetching projects");
         }
       } catch (error) {
-        console.error("Error fetching user email", error);
+        console.error("Error fetching projects", error);
       } finally {
         setLoadingProjects(false);
       }
@@ -80,23 +82,16 @@ const Page: React.FC = () => {
       });
 
       if (response.ok) {
-        try {
-          const response = await fetch("/api/get-projects");
-
-          if (response.ok) {
-            const { projects } = await response.json();
-            setProjects(projects);
-          } else {
-            console.error("Error fetching user email");
-          }
-        } catch (error) {
-          console.error("Error fetching user email", error);
-        }
+        const updatedProjects = projects.filter(
+          (item) => item.id !== projectId
+        );
+        setProjects(updatedProjects);
+        toast.success(`PromptGPT deleted successfully!`);
       } else {
-        console.error("Project deletion failed");
+        toast.error("Error deleting PromptGPT!");
       }
     } catch (error) {
-      console.error("Project deletion failed", error);
+      toast.error("Error deleting Promptgpt!");
     }
   };
 
@@ -124,6 +119,18 @@ const Page: React.FC = () => {
   if (userEmail) {
     return (
       <main className={styles.container}>
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
         <div className={styles.logo}>
           <Link href="/">
             <Image src="images/logo.svg" width={178} height={22.3} alt="logo" />

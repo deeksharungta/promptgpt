@@ -97,7 +97,7 @@ const Subdomain: React.FC<SubdomainProps> = ({
 
   return (
     <div className={styles.wrapper}>
-      <Link href="/" className={styles.logo}>
+      <Link href="https://www.promptgpt.tools" className={styles.logo}>
         <Image src="images/logo.svg" width={178} height={22.3} alt="logo" />
       </Link>
       <div className={styles.container}>
@@ -144,7 +144,10 @@ const Subdomain: React.FC<SubdomainProps> = ({
           />
         </div>
       </div>
-      <button className={styles["deploy-btn"]}>
+      <Link
+        href="https://www.promptgpt.tools/setup"
+        className={styles["deploy-btn"]}
+      >
         <Image src="images/logoIcon.svg" width={24} height={24} alt="logo" />
         <span>Deploy your own GPT with PromptGPT</span>
         <Image
@@ -153,7 +156,7 @@ const Subdomain: React.FC<SubdomainProps> = ({
           height={24}
           alt="arrow-right"
         />
-      </button>
+      </Link>
     </div>
   );
 };
