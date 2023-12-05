@@ -1,29 +1,22 @@
-import Image from "next/image";
 import styles from "./SetupForm.module.scss";
-import ProjectName from "./ProjectName/ProjectName";
-import Description from "./Description/Description";
-import Prompt from "./Prompt/Prompt";
-import Domain from "./Domain/Domain";
-import OpenAPIKey from "./OpenAPIKey/OpenAPIKey";
-import { FormEvent, useContext, useState } from "react";
-import { SetupContext } from "@/store/setup-context";
-import { useRouter } from "next/router";
-import Spinner from "../Spinner/Spinner";
+import {
+  Description,
+  Domain,
+  FormEvent,
+  Image,
+  OpenAPIKey,
+  ProjectName,
+  Prompt,
+  SetupContext,
+  SetupFormProps,
+  Spinner,
+  handleProjectSubmit,
+  useContext,
+  useRouter,
+  useState,
+} from "@/helpers/imports";
 
-type Project = {
-  data?: {
-    id: number;
-    name: string;
-    description: string;
-    apiKey: string;
-    domain: string;
-    prompt: string;
-    userId: number;
-  };
-  setShowEditForm?: (show: boolean) => void;
-};
-
-const SetupForm: React.FC<Project> = ({ data, setShowEditForm }) => {
+const SetupForm: React.FC<SetupFormProps> = ({ data, setShowEditForm }) => {
   const { updateSetupDetails } = useContext(SetupContext);
   const router = useRouter();
   const [isDeploying, setIsDeploying] = useState<boolean>(false);
@@ -43,7 +36,7 @@ const SetupForm: React.FC<Project> = ({ data, setShowEditForm }) => {
     prompt: false,
   });
 
-  const setupFormSubmitHandler = (e: FormEvent) => {
+  const setupFormSubmitHandler = async (e: FormEvent) => {
     e.preventDefault();
     setIsDeploying(true);
     if (
@@ -61,7 +54,7 @@ const SetupForm: React.FC<Project> = ({ data, setShowEditForm }) => {
         formValues.domain,
         formValues.key
       );
-      handleSubmit();
+      await handleProjectSubmit(data, setShowEditForm, formValues);
       setTimeout(() => {
         setIsDeploying(false);
         {
@@ -88,51 +81,6 @@ const SetupForm: React.FC<Project> = ({ data, setShowEditForm }) => {
       ...prevValidity,
       [fieldName]: isValid,
     }));
-  };
-
-  const handleSubmit = async () => {
-    if (!!data) {
-      const response = await fetch("/api/edit-project/", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: data.id,
-          name: formValues.projectName,
-          description: formValues.description,
-          prompt: formValues.prompt,
-          domain: formValues.domain,
-          key: formValues.key,
-        }),
-      });
-
-      if (response.ok) {
-        setShowEditForm && setShowEditForm(false);
-        console.log("Project updated successfully");
-      } else {
-        console.error("Project update failed");
-      }
-    } else {
-      const response = await fetch("/api/deploy", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formValues.projectName,
-          description: formValues.description,
-          prompt: formValues.prompt,
-          domain: formValues.domain,
-          key: formValues.key,
-        }),
-      });
-      if (response.ok) {
-        console.log("Success");
-      } else {
-        console.log("Error deploying project");
-      }
-    }
   };
 
   return (

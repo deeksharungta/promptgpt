@@ -1,14 +1,9 @@
-import { ChangeEvent, useReducer } from "react";
-
-type InputState = {
-  value: string;
-  isTouched: boolean;
-};
-
-type InputAction = {
-  type: "INPUT" | "BLUR" | "RESET";
-  value?: string;
-};
+import {
+  ChangeEvent,
+  InputAction,
+  InputState,
+  useReducer,
+} from "@/helpers/imports";
 
 const initialInputState: InputState = {
   value: "",
@@ -31,11 +26,6 @@ const inputStateReducer = (
   }
 };
 
-// const useInput = (validateValue: (value: string) => boolean) => {
-//   const [inputState, dispatch] = useReducer(
-//     inputStateReducer,
-//     initialInputState
-//   );
 const useInput = (
   validateValue: (value: string) => boolean,
   initialValue?: string

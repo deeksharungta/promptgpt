@@ -1,12 +1,11 @@
-import { useEffect, useRef, useState } from "react";
 import styles from "./Button.module.scss";
-import Spinner from "../Spinner/Spinner";
-
-type ButtonProps = {
-  onClick?: () => void;
-  disabled?: boolean;
-  loading?: boolean;
-};
+import {
+  ButtonProps,
+  Spinner,
+  useEffect,
+  useRef,
+  useState,
+} from "@/helpers/imports";
 
 const Button: React.FC<ButtonProps> = ({ onClick, disabled, loading }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);

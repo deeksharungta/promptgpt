@@ -1,16 +1,13 @@
-import React, { useEffect } from "react";
 import styles from "./Prompt.module.scss";
-import Image from "next/image";
-import Link from "next/link";
-import useInput from "@/hooks/use-input";
+import {
+  Image,
+  Link,
+  PromptProps,
+  useEffect,
+  useInput,
+} from "@/helpers/imports";
 
 const promptValidityCheck = (value: string) => value.trim() !== "";
-
-type PromptProps = {
-  onPromptChange: (value: string) => void;
-  onValidityChange: (isValid: boolean) => void;
-  initialPrompt?: string;
-};
 
 const Prompt: React.FC<PromptProps> = ({
   onPromptChange,

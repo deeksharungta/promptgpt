@@ -1,10 +1,12 @@
-import { UserContext } from "@/store/user-context";
-import { useRouter } from "next/router";
-import { useContext } from "react";
-import Loading from "../Loading/Loading";
 import styles from "./Home.module.scss";
-import Image from "next/image";
-import Login from "../Login/Login";
+import {
+  Image,
+  Loading,
+  Login,
+  UserContext,
+  useContext,
+  useRouter,
+} from "@/helpers/imports";
 
 const Home = () => {
   const { userEmail, loading } = useContext(UserContext);

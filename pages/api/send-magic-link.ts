@@ -1,6 +1,5 @@
-import jwt from "jsonwebtoken";
+import { NextApiRequest, NextApiResponse, jwt } from "@/helpers/imports";
 import nodemailer from "nodemailer";
-import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
   req: NextApiRequest,

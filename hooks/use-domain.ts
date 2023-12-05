@@ -1,14 +1,11 @@
-import { ChangeEvent, useReducer, useState } from "react";
-
-type InputState = {
-  value: string;
-  isTouched: boolean;
-};
-
-type InputAction = {
-  type: "INPUT" | "BLUR" | "RESET";
-  value?: string;
-};
+import {
+  ChangeEvent,
+  InputAction,
+  InputState,
+  checkDomainUniqueness,
+  useReducer,
+  useState,
+} from "@/helpers/imports";
 
 const initialInputState: InputState = {
   value: "",
@@ -44,28 +41,6 @@ const useDomain = (initialValue?: string) => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const hasError = !valueIsValid && inputState.isTouched;
 
-  const checkDomainUniqueness = async (domain: string): Promise<boolean> => {
-    try {
-      setErrorMessage("Verifying...");
-      const response = await fetch(`/api/check-domain?domain=${domain}`);
-      if (response.ok) {
-        const data = await response.json();
-        if (data.exists) {
-          setErrorMessage("Domain Name already taken");
-          return false;
-        }
-        return true;
-      } else if (response.status === 404) {
-        return true;
-      } else {
-        throw new Error("Invalid response from server");
-      }
-    } catch (error) {
-      console.error("Error checking domain uniqueness:", error);
-      return false;
-    }
-  };
-
   const valueChangeHandler = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -84,7 +59,10 @@ const useDomain = (initialValue?: string) => {
       setValueIsValid(false);
       return;
     }
-    const isValid = await checkDomainUniqueness(inputState.value);
+    const isValid = await checkDomainUniqueness(
+      inputState.value,
+      setErrorMessage
+    );
     setValueIsValid(isValid);
   };
 

@@ -1,11 +1,5 @@
-import { ReactNode } from "react";
 import styles from "./Layout.module.scss";
-import Image from "next/image";
-import Head from "next/head";
-
-type LayoutProps = {
-  children: ReactNode;
-};
+import { Head, Image, LayoutProps } from "@/helpers/imports";
 
 export default function Layout({ children }: LayoutProps) {
   return (

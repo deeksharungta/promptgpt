@@ -1,24 +1,23 @@
-import Image from "next/image";
+import {
+  Image,
+  Link,
+  Loading,
+  Project,
+  SetupForm,
+  Spinner,
+  ToastContainer,
+  UserContext,
+  fetchUserProjects,
+  handleDeleteProject,
+  handleEditProject,
+  handleLogout,
+  useContext,
+  useEffect,
+  useRouter,
+  useState,
+} from "@/helpers/imports";
 import styles from "@/styles/Dashboard.module.scss";
-import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "@/store/user-context";
-import { useRouter } from "next/router";
-import SetupForm from "@/components/SetupForm/SetupForm";
-import Loading from "@/components/Loading/Loading";
-import Spinner from "@/components/Spinner/Spinner";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-type Project = {
-  id: number;
-  name: string;
-  description: string;
-  apiKey: string;
-  domain: string;
-  prompt: string;
-  userId: number;
-};
 
 const Page: React.FC = () => {
   const { userEmail, updateUserEmail, loading } = useContext(UserContext);
@@ -30,83 +29,24 @@ const Page: React.FC = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const fetchUserProjects = async () => {
-      try {
-        const response = await fetch("/api/get-projects");
-        if (response.ok) {
-          const { projects } = await response.json();
-          setProjects(projects);
-        } else {
-          console.error("Error fetching projects");
-        }
-      } catch (error) {
-        console.error("Error fetching projects", error);
-      } finally {
-        setLoadingProjects(false);
-      }
-    };
-    fetchUserProjects();
+    fetchUserProjects(setProjects, setLoadingProjects);
   }, []);
 
-  const handleLogout = async () => {
-    setShowSpinner(true);
-    try {
-      setTimeout(async () => {
-        const response = await fetch("/api/logout", {
-          method: "POST",
-        });
-
-        if (response.ok) {
-          updateUserEmail("");
-          router.push("/");
-          setShowSpinner(false);
-        } else {
-          console.error("Logout failed");
-          setShowSpinner(false);
-        }
-      }, 500);
-    } catch (error) {
-      console.error("Logout failed", error);
-      setShowSpinner(false);
-    }
+  const logoutHandler = async () => {
+    await handleLogout(setShowSpinner, updateUserEmail, router);
   };
 
-  const handleDeleteProject = async (projectId: number) => {
-    try {
-      const response = await fetch("/api/delete-project", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id: projectId }),
-      });
-
-      if (response.ok) {
-        const updatedProjects = projects.filter(
-          (item) => item.id !== projectId
-        );
-        setProjects(updatedProjects);
-        toast.success(`PromptGPT deleted successfully!`);
-      } else {
-        toast.error("Error deleting PromptGPT!");
-      }
-    } catch (error) {
-      toast.error("Error deleting Promptgpt!");
-    }
+  const deleteProjectHandler = async (projectId: number) => {
+    await handleDeleteProject(projectId, projects, setProjects);
   };
 
-  const handleEditProject = async (projectId: number) => {
-    setShowEditForm(true);
-    try {
-      const projectToEdit = projects.find(
-        (project) => project.id === projectId
-      );
-
-      setEditProjectData(projectToEdit);
-    } catch (error) {
-      console.error("Project update failed", error);
-      setShowEditForm(false);
-    }
+  const editProjectHandler = async (projectId: number) => {
+    await handleEditProject(
+      projectId,
+      projects,
+      setShowEditForm,
+      setEditProjectData
+    );
   };
 
   if (loading) return <Loading />;
@@ -154,7 +94,7 @@ const Page: React.FC = () => {
             {showSpinner ? (
               <Spinner color=" rgba(255, 255, 255, 0.4)" height="20px" />
             ) : (
-              <button className={styles["logout-btn"]} onClick={handleLogout}>
+              <button className={styles["logout-btn"]} onClick={logoutHandler}>
                 Logout
               </button>
             )}
@@ -187,11 +127,11 @@ const Page: React.FC = () => {
                             {item.name}
                           </Link>
                           <div>
-                            <button onClick={() => handleEditProject(item.id)}>
+                            <button onClick={() => editProjectHandler(item.id)}>
                               Edit
                             </button>
                             <button
-                              onClick={() => handleDeleteProject(item.id)}
+                              onClick={() => deleteProjectHandler(item.id)}
                             >
                               Delete
                             </button>

@@ -1,14 +1,7 @@
-import React, { useEffect } from "react";
 import styles from "./Description.module.scss";
-import useInput from "@/hooks/use-input";
+import { DescriptionProps, useEffect, useInput } from "@/helpers/imports";
 
 const descriptionValidityCheck = (value: string) => value.trim() !== "";
-
-type DescriptionProps = {
-  onDescriptionChange: (value: string) => void;
-  onValidityChange: (isValid: boolean) => void;
-  initialDescription?: string;
-};
 
 const Description: React.FC<DescriptionProps> = ({
   onDescriptionChange,

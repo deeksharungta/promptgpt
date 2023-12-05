@@ -1,12 +1,5 @@
 import styles from "./Domain.module.scss";
-import { useEffect } from "react";
-import useDomain from "@/hooks/use-domain";
-
-type DomainProps = {
-  onDomainChange: (value: string) => void;
-  onValidityChange: (isValid: boolean) => void;
-  initialDomain?: string;
-};
+import { DomainProps, useDomain, useEffect } from "@/helpers/imports";
 
 const Domain: React.FC<DomainProps> = ({
   onDomainChange,

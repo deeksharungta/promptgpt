@@ -1,9 +1,5 @@
+import { SpinnerProps } from "@/helpers/imports";
 import styles from "./Spinner.module.scss";
-
-type SpinnerProps = {
-  color: string;
-  height: string;
-};
 
 const Spinner: React.FC<SpinnerProps> = ({ color, height }) => {
   return (

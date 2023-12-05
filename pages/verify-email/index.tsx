@@ -1,9 +1,13 @@
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/router";
 import styles from "@/styles/Verify.module.scss";
-import { useContext, useState } from "react";
-import Link from "next/link";
-import { UserContext } from "@/store/user-context";
+import {
+  Link,
+  UserContext,
+  handleEmailVerification,
+  useContext,
+  useRouter,
+  useSearchParams,
+  useState,
+} from "@/helpers/imports";
 
 export default function VerifyEmail() {
   const { updateUserEmail } = useContext(UserContext);
@@ -12,26 +16,7 @@ export default function VerifyEmail() {
   const [hasError, setHasError] = useState<boolean>(false);
 
   const token = searchParams.get("token");
-  const handleEmailVerification = async (token: string | null) => {
-    const response = await fetch("/api/verify-magic-link", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ token }),
-    });
-
-    const data = await response.json();
-    if (response.ok) {
-      updateUserEmail(data.data.email);
-      setHasError(false);
-      router.push("/setup");
-    } else {
-      setHasError(true);
-    }
-  };
-
-  token && handleEmailVerification(token);
+  token && handleEmailVerification(token, updateUserEmail, router, setHasError);
 
   return (
     <div className={styles["verify-page"]}>

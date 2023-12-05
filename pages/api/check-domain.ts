@@ -1,5 +1,8 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
+import {
+  NextApiRequest,
+  NextApiResponse,
+  PrismaClient,
+} from "@/helpers/imports";
 
 const prisma = new PrismaClient();
 

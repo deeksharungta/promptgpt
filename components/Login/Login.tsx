@@ -1,7 +1,11 @@
-import { FormEvent, useState } from "react";
 import styles from "./Login.module.scss";
-import useInput from "@/hooks/use-input";
-import Spinner from "../Spinner/Spinner";
+import {
+  FormEvent,
+  Spinner,
+  handleEmailSubmit,
+  useInput,
+  useState,
+} from "@/helpers/imports";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const emailValidityCheck = (value: string) =>
@@ -28,27 +32,9 @@ function Login() {
       setShowFeedback(true);
       resetEmail();
     }, 1000);
-    // setShowFeedback(true);
 
     if (emailIsValid) {
       handleEmailSubmit(emailValue);
-      // resetEmail();
-    }
-  };
-
-  const handleEmailSubmit = async (email: string) => {
-    const response = await fetch("/api/send-magic-link", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email }),
-    });
-
-    if (response.ok) {
-      console.log("Success");
-    } else {
-      console.log("Error hogya");
     }
   };
 

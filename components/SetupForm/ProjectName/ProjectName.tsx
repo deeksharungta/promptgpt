@@ -1,14 +1,7 @@
-import useInput from "@/hooks/use-input";
 import styles from "./ProjectName.module.scss";
-import { useEffect } from "react";
+import { ProjectNameProps, useEffect, useInput } from "@/helpers/imports";
 
 const nameValidityCheck = (value: string) => value.trim() !== "";
-
-type ProjectNameProps = {
-  onNameChange: (value: string) => void;
-  onValidityChange: (isValid: boolean) => void;
-  initialName?: string;
-};
 
 const ProjectName: React.FC<ProjectNameProps> = ({
   onNameChange,

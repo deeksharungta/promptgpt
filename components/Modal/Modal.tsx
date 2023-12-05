@@ -1,10 +1,5 @@
-import { ReactNode } from "react";
 import styles from "./Modal.module.scss";
-
-type ModalProps = {
-  onClose?: () => void;
-  children: ReactNode;
-};
+import { ModalProps } from "@/helpers/imports";
 
 const Modal: React.FC<ModalProps> = ({ onClose, children }) => {
   const closeHandler = () => {

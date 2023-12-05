@@ -1,14 +1,11 @@
-import React, { useEffect } from "react";
 import styles from "./OpenAPIKey.module.scss";
-import Image from "next/image";
-import Link from "next/link";
-import useApiKey from "@/hooks/use-api-key";
-
-type OpenAPIKeyProps = {
-  onKeyChange: (value: string) => void;
-  onValidityChange: (isValid: boolean) => void;
-  initialKey?: string;
-};
+import {
+  Image,
+  Link,
+  OpenAPIKeyProps,
+  useApiKey,
+  useEffect,
+} from "@/helpers/imports";
 
 const OpenAPIKey: React.FC<OpenAPIKeyProps> = ({
   onKeyChange,

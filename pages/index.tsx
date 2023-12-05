@@ -1,23 +1,10 @@
-import { GetServerSideProps } from "next";
-import Home from "@/components/HomePage/Home";
-import Subdomain from "@/components/Subdomain/Subdomain";
-
-type ProjectData = {
-  name: string;
-  description: string;
-  prompt: string;
-  domain: string;
-  key: string;
-};
-
-type HomePageProps = {
-  name?: string;
-  description?: string;
-  prompt?: string;
-  domain?: string;
-  key?: string;
-  subdomain?: string;
-};
+import {
+  Home,
+  GetServerSideProps,
+  HomePageProps,
+  Subdomain,
+  fetchProjectData,
+} from "@/helpers/imports";
 
 const HomePage: React.FC<HomePageProps> = (props) => {
   if (props.subdomain === "home") {
@@ -52,29 +39,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   } else {
-    try {
-      const response = await fetch(`/api/get-project?domain=${subdomain}`);
-      if (response.ok) {
-        const { name, description, prompt, domain, key }: ProjectData =
-          await response.json();
-
-        return {
-          props: {
-            name,
-            description,
-            prompt,
-            domain,
-            key,
-          },
-        };
-      } else {
-        console.error("Error fetching project");
-        return {
-          notFound: true,
-        };
-      }
-    } catch (error) {
-      console.error("Error fetching project", error);
+    const projectData = await fetchProjectData(subdomain);
+    if (projectData) {
+      return {
+        props: {
+          ...projectData,
+        },
+      };
+    } else {
       return {
         notFound: true,
       };

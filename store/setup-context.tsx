@@ -1,21 +1,10 @@
-import { createContext, useState, ReactNode, useContext } from "react";
-
-type SetupContextType = {
-  setupDetails: {
-    name: string | null;
-    description: string | null;
-    prompt: string | null;
-    domain: string | null;
-    key: string | null;
-  };
-  updateSetupDetails: (
-    name: string | null,
-    description: string | null,
-    prompt: string | null,
-    domain: string | null,
-    key: string | null
-  ) => void;
-};
+import {
+  createContext,
+  SetupContextType,
+  ReactNode,
+  useState,
+  useContext,
+} from "@/helpers/imports";
 
 const initialSetupContext: SetupContextType = {
   setupDetails: {

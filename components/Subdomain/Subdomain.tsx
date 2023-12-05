@@ -1,15 +1,14 @@
-import Button from "@/components/Button/Button";
-import Image from "next/image";
-import Link from "next/link";
 import styles from "./Subdomain.module.scss";
-import { ChangeEvent, useState } from "react";
-
-type SubdomainProps = {
-  name?: string;
-  description?: string;
-  prompt?: string;
-  key?: string;
-};
+import {
+  Button,
+  ChangeEvent,
+  Image,
+  Link,
+  SubdomainProps,
+  chatData,
+  handleCopy,
+  useState,
+} from "@/helpers/imports";
 
 const Subdomain: React.FC<SubdomainProps> = ({
   name,
@@ -20,7 +19,8 @@ const Subdomain: React.FC<SubdomainProps> = ({
   const [copyButtonVisible, setCopyButtonVisible] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [output, setOutput] = useState<string>("");
+  const [userMessage, setUserMessage] = useState("");
   const [messages, setMessages] = useState([
     {
       role: "system",
@@ -28,71 +28,17 @@ const Subdomain: React.FC<SubdomainProps> = ({
     },
   ]);
 
-  const [output, setOutput] = useState<string>("");
-  const [userMessage, setUserMessage] = useState("");
-
-  const handleCopy = () => {
-    const textToCopy = output;
-    navigator.clipboard
-      .writeText(textToCopy)
-      .then(() => {
-        setCopySuccess(true);
-        setTimeout(() => setCopySuccess(false), 2000);
-      })
-      .catch((err) => {
-        console.error("Error copying text: ", err);
-      });
-  };
-
   const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setUserMessage(event.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setMessages((prevMessages) => [
       ...prevMessages,
       { role: "user", content: userMessage },
     ]);
     setLoading(true);
-    chatData(userMessage);
-  };
-
-  const chatData = async (userMessage: string) => {
-    try {
-      const response = await fetch(
-        "https://api.openai.com/v1/chat/completions",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${key}`,
-          },
-          body: JSON.stringify({
-            model: "gpt-3.5-turbo",
-            messages: [...messages, { role: "user", content: userMessage }],
-            temperature: 0.7,
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Chat API request failed");
-      }
-
-      const responseData = await response.json();
-      if (responseData.choices && responseData.choices.length > 0) {
-        const assistantMessage = responseData.choices[0]?.message;
-        if (assistantMessage && assistantMessage.content) {
-          setOutput(assistantMessage.content);
-        }
-      } else {
-        console.error("Invalid responseData structure:", responseData);
-      }
-    } catch (error) {
-      console.error("Error while fetching chat data:", error);
-    } finally {
-      setLoading(false);
-    }
+    await chatData(userMessage, key, messages, setLoading, setOutput);
   };
 
   return (
@@ -126,10 +72,10 @@ const Subdomain: React.FC<SubdomainProps> = ({
             onMouseEnter={() => setCopyButtonVisible(true)}
             onMouseLeave={() => setCopyButtonVisible(false)}
           >
-            {output}{" "}
+            {output}
             <button
               className={styles["copy-btn"]}
-              onClick={handleCopy}
+              onClick={() => handleCopy(output, setCopySuccess)}
               style={{ display: copyButtonVisible ? "block" : "none" }}
             >
               {copySuccess ? "Copied!" : "Copy"}
