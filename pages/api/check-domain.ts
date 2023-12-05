@@ -18,7 +18,7 @@ export default async function handler(
 
     const projectDetails = await prisma.project.findUnique({
       where: {
-        domain: domain,
+        domain: domain.toLowerCase(),
       },
     });
 

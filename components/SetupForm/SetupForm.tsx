@@ -67,7 +67,7 @@ const SetupForm: React.FC<Project> = ({ data, setShowEditForm }) => {
         {
           data
             ? router.push(`/dashboard`)
-            : router.push(`/${formValues.domain}`);
+            : router.push(`https://${formValues.domain}.promptgpt.tools`);
         }
       }, 1000);
     } else {
@@ -130,7 +130,7 @@ const SetupForm: React.FC<Project> = ({ data, setShowEditForm }) => {
       if (response.ok) {
         console.log("Success");
       } else {
-        console.log("Error hogya");
+        console.log("Error deploying project");
       }
     }
   };

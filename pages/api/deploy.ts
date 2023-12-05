@@ -37,14 +37,14 @@ export default async function handler(
     }
 
     const userId = user.id;
-
+    const subdomain = domain.toLowerCase();
     try {
       const newProject = await prisma.project.create({
         data: {
           name,
           description,
           prompt,
-          domain,
+          domain: subdomain,
           apiKey: key,
           userId: userId,
         },

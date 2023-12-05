@@ -16,11 +16,11 @@ type HomePageProps = {
   prompt?: string;
   domain?: string;
   key?: string;
-  wildcard?: string;
+  subdomain?: string;
 };
 
 const HomePage: React.FC<HomePageProps> = (props) => {
-  if (props.wildcard === "home") {
+  if (props.subdomain === "home") {
     return <Home />;
   } else {
     return (
@@ -38,21 +38,22 @@ export default HomePage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   let wildcard = context?.req?.headers?.host?.split(".")[0];
-  wildcard =
-    wildcard != "www"
-      ? wildcard != "localhost:3000"
-        ? wildcard
+  let subdomain = wildcard?.toLowerCase();
+  subdomain =
+    subdomain != "www"
+      ? subdomain != "localhost:3000"
+        ? subdomain
         : "abc"
       : "home";
-  if (wildcard === "home") {
+  if (subdomain === "home") {
     return {
       props: {
-        wildcard,
+        subdomain,
       },
     };
   } else {
     try {
-      const response = await fetch(`/api/get-project?domain=${wildcard}`);
+      const response = await fetch(`/api/get-project?domain=${subdomain}`);
       if (response.ok) {
         const { name, description, prompt, domain, key }: ProjectData =
           await response.json();

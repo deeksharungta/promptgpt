@@ -15,6 +15,7 @@ export default async function handler(
       }
 
       const { name, description, prompt, domain, key } = req.body;
+      const subdomain = domain.toLowerCase();
       const updatedProject = await prisma.project.update({
         where: {
           id: id,
@@ -23,7 +24,7 @@ export default async function handler(
           name,
           description,
           prompt,
-          domain,
+          domain: subdomain,
           apiKey: key,
         },
       });

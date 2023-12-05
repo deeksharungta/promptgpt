@@ -1,20 +1,14 @@
-// Import necessary modules
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 
-// Create an instance of PrismaClient
 const prisma = new PrismaClient();
 
-// Define the API handler
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  // Extract the domain from the query parameters
   const { domain } = req.query;
-
   try {
-    // Check if the domain is provided
     if (!domain) {
       return res
         .status(400)
