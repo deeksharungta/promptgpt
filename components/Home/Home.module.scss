@@ -1,0 +1,71 @@
+.home-page {
+  margin: 14.6rem auto auto 11vw;
+
+  .title {
+    color: #a0c6ff;
+    font-family: "Work Sans", sans-serif;
+    font-size: 10rem;
+    font-weight: 800;
+    line-height: 120%;
+    margin: 2.4rem 0;
+    max-width: 90.7rem;
+  }
+
+  .sub-title {
+    color: rgba(255, 255, 255, 0.6);
+    font-family: "Work Sans", sans-serif;
+    font-size: 2.4rem;
+    max-width: 67.4rem;
+    font-weight: 500;
+    line-height: 140%;
+  }
+}
+
+@media (max-width: 718px) {
+  .home-page {
+    margin: 14.6rem 10vw auto 10vw;
+
+    .title {
+      font-size: 8rem;
+    }
+
+    .sub-title {
+      font-size: 2rem;
+    }
+  }
+}
+
+@media (max-width: 564px) {
+  .home-page {
+    margin: 12rem 6vw auto 6vw;
+    img {
+      width: 185.6px;
+    }
+
+    .title {
+      font-size: 4.8rem;
+      font-weight: 700;
+    }
+
+    .sub-title {
+      font-size: 1.8rem;
+      font-weight: 400;
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .home-page {
+    img {
+      width: 139.2px;
+    }
+
+    .title {
+      font-size: 4rem;
+    }
+
+    .sub-title {
+      font-size: 1.8rem;
+    }
+  }
+}

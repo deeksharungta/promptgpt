@@ -69,3 +69,66 @@
   line-height: 120%;
   margin-top: 0.4rem;
 }
+
+@media (max-width: 718px) {
+  .email-input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 622px) {
+  .email-input {
+    input {
+      font-size: 1.6rem;
+    }
+
+    button {
+      min-width: 10rem;
+      font-size: 1.6rem;
+    }
+  }
+
+  .feedback {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 538px) {
+  .email-input {
+    button {
+      padding: 1.2rem 1.6rem;
+      min-width: 8rem;
+    }
+  }
+}
+
+@media (max-width: 478px) {
+  .email-input {
+    button {
+      padding: 1.2rem 1rem;
+      min-width: 6rem;
+    }
+  }
+}
+
+@media (max-width: 388px) {
+  .email-input {
+    input {
+      font-size: 1.2rem;
+      font-weight: 400;
+    }
+    button {
+      padding: 1rem 0.6rem;
+      font-size: 1.2rem;
+    }
+  }
+
+  .error-message {
+    font-size: 1.2rem;
+    font-weight: 400;
+  }
+
+  .feedback {
+    font-size: 1.4rem;
+  }
+}
