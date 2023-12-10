@@ -287,7 +287,9 @@ export const fetchProjectData = async (
   subdomain: string | undefined
 ): Promise<ProjectData | null> => {
   try {
-    const response = await fetch(`/api/get-project?domain=${subdomain}`);
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-project?domain=${subdomain}`
+    );
     if (response.ok) {
       const { name, description, prompt, domain, key }: ProjectData =
         await response.json();

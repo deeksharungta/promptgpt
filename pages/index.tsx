@@ -37,7 +37,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   let subdomain = wildcard?.toLowerCase();
   subdomain =
     subdomain != "www"
-      ? subdomain != "localhost:3000"
+      ? subdomain != "[::1]:50369"
         ? subdomain
         : "abc"
       : "home";
