@@ -1,0 +1,52 @@
+.menu {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 1.2rem;
+  align-items: flex-end;
+  border-radius: 8px;
+  gap: 1.2rem;
+  position: absolute;
+  top: 0%;
+  right: 0%;
+
+  .close-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 22px;
+    height: 22px;
+    padding: 0.1rem;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  a {
+    padding: 0 0.4rem;
+    color: #000;
+    font-size: 1.6rem;
+    font-weight: 500;
+    font-family: "Work Sans";
+
+    &:hover {
+      color: rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  .logout-btn {
+    padding: 0 0.4rem;
+    cursor: pointer;
+    background: transparent;
+    color: #fd4438;
+    border: none;
+    font-size: 1.6rem;
+    font-weight: 500;
+    font-family: "Work Sans";
+    &:hover {
+      color: rgba(253, 69, 56, 0.8);
+    }
+  }
+}

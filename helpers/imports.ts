@@ -12,6 +12,7 @@ export { ToastContainer, toast } from "react-toastify";
 
 // Types
 export type {
+  MenuProps,
   ButtonProps,
   LayoutProps,
   HomePageProps,

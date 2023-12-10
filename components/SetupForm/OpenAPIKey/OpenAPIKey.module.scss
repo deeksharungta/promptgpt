@@ -67,3 +67,23 @@
     text-decoration: underline;
   }
 }
+
+@media (max-width: 428px) {
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .input {
+    font-size: 1.4rem;
+  }
+
+  .link:link,
+  .link:visited {
+    font-size: 1.2rem;
+
+    img {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+  }
+}

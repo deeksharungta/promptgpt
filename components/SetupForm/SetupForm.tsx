@@ -85,7 +85,7 @@ const SetupForm: React.FC<SetupFormProps> = ({ data, setShowEditForm }) => {
 
   return (
     <form className={styles["setup-form"]} onSubmit={setupFormSubmitHandler}>
-      <div>
+      <div className={styles["outer-container"]}>
         <div className={styles.stretch}>
           <ProjectName
             onNameChange={(value) => handleInputChange("projectName", value)}
@@ -126,11 +126,11 @@ const SetupForm: React.FC<SetupFormProps> = ({ data, setShowEditForm }) => {
           />
         </div>
         <Image
+          className={styles.divider}
           src="images/divider.svg"
           width={888}
           height={16}
           alt="divider"
-          style={{ marginTop: "3.2rem" }}
         />
       </div>
       <button

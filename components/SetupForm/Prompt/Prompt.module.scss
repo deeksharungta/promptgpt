@@ -58,13 +58,12 @@
   line-height: 120%;
   height: 10.9rem;
   padding: 1.6rem;
-  // margin-bottom: 3.2rem;
   border-radius: 2rem;
   border: 1px solid rgba(160, 198, 255, 0.4);
   background: transparent;
   resize: none;
   overflow-y: auto;
-  scrollbar-width: thin; /* For Firefox */
+  scrollbar-width: thin;
 
   &:focus {
     outline: none;
@@ -82,5 +81,25 @@
   &::-webkit-scrollbar-thumb {
     background: transparent;
     border-radius: 2rem;
+  }
+}
+
+@media (max-width: 428px) {
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .prompt-textarea {
+    font-size: 1.4rem;
+  }
+
+  .link:link,
+  .link:visited {
+    font-size: 1.2rem;
+
+    img {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
   }
 }

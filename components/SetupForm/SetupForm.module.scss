@@ -3,6 +3,13 @@
   flex-direction: column;
   justify-content: space-between;
   flex-grow: 1;
+
+  .outer-container {
+    .divider {
+      width: 100%;
+      margin-top: 3.2rem;
+    }
+  }
 }
 
 .stretch {
@@ -38,5 +45,24 @@
 
   &:disabled {
     cursor: not-allowed;
+  }
+}
+
+@media (max-width: 800px) {
+  .stretch {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+@media (max-width: 428px) {
+  .deploy-btn {
+    font-size: 1.6rem;
+    padding: 1.6rem 2rem;
+
+    img {
+      width: 1.6rem;
+      height: 1.6rem;
+    }
   }
 }

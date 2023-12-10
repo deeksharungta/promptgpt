@@ -15,6 +15,10 @@ export type ModalProps = {
   children: ReactNode;
 };
 
+export type MenuProps = {
+  onClose: (showMenu: boolean) => void;
+};
+
 export type DescriptionProps = {
   onDescriptionChange: (value: string) => void;
   onValidityChange: (isValid: boolean) => void;

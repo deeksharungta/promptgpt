@@ -61,6 +61,22 @@
     line-height: 140%;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 1.2rem;
-    padding: 1rem 2.4rem;
+    padding: 1rem 1.2rem;
+  }
+}
+
+@media (max-width: 428px) {
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .domain-input {
+    .input {
+      font-size: 1.4rem;
+    }
+
+    p {
+      font-size: 1.4rem;
+    }
   }
 }

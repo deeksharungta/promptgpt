@@ -43,3 +43,13 @@
     outline: none;
   }
 }
+
+@media (max-width: 428px) {
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .input {
+    font-size: 1.4rem;
+  }
+}

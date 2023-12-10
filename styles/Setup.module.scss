@@ -19,10 +19,30 @@
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(50px);
 
+  .divider {
+    width: 100%;
+  }
+
   .heading {
     display: flex;
     align-items: center;
     margin-bottom: 2.4rem;
+    position: relative;
+
+    .hamburger {
+      display: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      width: 28px;
+      height: 28px;
+      padding: 0.4rem;
+      border-radius: 4px;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+    }
 
     .title {
       margin-right: auto;
@@ -65,4 +85,61 @@
 
 .grid-span {
   grid-column: 1/-1;
+}
+
+@media (max-width: 766px) {
+  .setup-page {
+    margin: 4.8rem auto 0 auto;
+
+    .heading {
+      .title {
+        font-size: 2.4rem;
+      }
+
+      .email:link,
+      .email:visited {
+        font-size: 1.4rem;
+      }
+
+      .logout-btn {
+        font-size: 1.4rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .setup-page {
+    .heading {
+      .hamburger {
+        display: block;
+      }
+
+      .email,
+      .logout-btn {
+        display: none;
+      }
+    }
+  }
+}
+@media (max-width: 480px) {
+  .setup-page {
+    padding: 3.2rem;
+  }
+}
+
+@media (max-width: 392px) {
+  .setup-page {
+    .heading {
+      .title {
+        font-size: 2rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 346px) {
+  .setup-page {
+    padding: 2.4rem;
+  }
 }
