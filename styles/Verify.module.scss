@@ -24,9 +24,9 @@
       background: var(--Primary, #a0c6ff);
       color: #000;
       font-family: "Work Sans", sans-serif;
-      font-size: 20px;
+      font-size: 2rem;
       font-weight: 500;
-      padding: 12px 24px;
+      padding: 1.2rem 2.4rem;
     }
 
     a:hover,
@@ -44,6 +44,28 @@
       font-weight: 500;
       line-height: 140%;
       margin-bottom: 2rem;
+    }
+  }
+}
+
+@media (max-width: 460px) {
+  .verify-page {
+    .error {
+      p {
+        font-size: 2rem;
+      }
+
+      a:link,
+      a:visited {
+        font-size: 1.6rem;
+        padding: 1rem 2rem;
+      }
+    }
+
+    .success {
+      p {
+        font-size: 2rem;
+      }
     }
   }
 }
