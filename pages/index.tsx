@@ -4,11 +4,20 @@ import {
   HomePageProps,
   Subdomain,
   fetchProjectData,
+  Link,
 } from "@/helpers/imports";
+import styles from "@/styles/Home.module.scss";
 
 const HomePage: React.FC<HomePageProps> = (props) => {
   if (props.subdomain === "home") {
     return <Home />;
+  } else if (props.subdomain === "abc" || props.subdomain === "notFound") {
+    return (
+      <div className={styles["not-found"]}>
+        <h3>No PromptGPT found!</h3>
+        <Link href="https://www.promptgpt.tools/setup">Deploy Now</Link>
+      </div>
+    );
   } else {
     return (
       <Subdomain
@@ -47,8 +56,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         },
       };
     } else {
+      subdomain = "notFound";
       return {
-        notFound: true,
+        props: {
+          subdomain,
+        },
       };
     }
   }
