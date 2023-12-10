@@ -90,6 +90,7 @@
 @media (max-width: 766px) {
   .setup-page {
     margin: 4.8rem auto 0 auto;
+    min-height: calc(100vh - 23.8px - 3.3rem - 4.8rem);
 
     .heading {
       .title {

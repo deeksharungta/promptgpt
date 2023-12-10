@@ -2,6 +2,7 @@ import {
   Image,
   Link,
   Loading,
+  Menu,
   Project,
   SetupForm,
   Spinner,
@@ -26,6 +27,7 @@ const Page: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [showSpinner, setShowSpinner] = useState<boolean>(false);
   const [loadingProjects, setLoadingProjects] = useState<boolean>(true);
+  const [showMenu, setShowMenu] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -82,6 +84,23 @@ const Page: React.FC = () => {
             <h2 className={styles.title}>
               {showEditForm ? "Edit your PromptGPT" : "Dashboard"}
             </h2>
+            {!showMenu ? (
+              <button
+                onClick={() => {
+                  setShowMenu(true);
+                }}
+                className={styles.hamburger}
+              >
+                <Image
+                  src="images/hamburger-menu.svg"
+                  width={20}
+                  height={20}
+                  alt="hamburger menu icon"
+                />
+              </button>
+            ) : (
+              <Menu onClose={setShowMenu} />
+            )}
             <Link
               href="/dashboard"
               className={styles.email}
@@ -100,6 +119,7 @@ const Page: React.FC = () => {
             )}
           </header>
           <Image
+            className={styles.divider}
             src="images/divider.svg"
             width={888}
             height={16}

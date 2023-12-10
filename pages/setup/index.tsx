@@ -3,6 +3,7 @@ import {
   Image,
   Link,
   Loading,
+  Menu,
   SetupForm,
   Spinner,
   UserContext,
@@ -11,8 +12,6 @@ import {
   useRouter,
   useState,
 } from "@/helpers/imports";
-import Menu from "@/components/Menu/Menu";
-
 const SetupPage: React.FC = () => {
   const { userEmail, updateUserEmail, loading } = useContext(UserContext);
   const router = useRouter();

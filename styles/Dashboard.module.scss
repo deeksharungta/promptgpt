@@ -19,10 +19,29 @@
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(50px);
 
+  .divider {
+    width: 100%;
+  }
+
   .heading {
     display: flex;
     align-items: center;
     margin-bottom: 2.4rem;
+
+    .hamburger {
+      display: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      width: 28px;
+      height: 28px;
+      padding: 0.4rem;
+      border-radius: 4px;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+    }
 
     .title {
       margin-right: auto;
@@ -158,5 +177,109 @@
       rgba(255, 255, 255, 0.3) 0%,
       rgba(255, 255, 255, 0.1) 100%
     );
+  }
+}
+
+@media (max-width: 800px) {
+  .inner-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 766px) {
+  .dashboard-page {
+    margin: 4.8rem auto 0 auto;
+    min-height: calc(100vh - 23.8px - 3.3rem - 4.8rem);
+
+    .heading {
+      .title {
+        font-size: 2.4rem;
+      }
+
+      .email:link,
+      .email:visited {
+        font-size: 1.4rem;
+      }
+
+      .logout-btn {
+        font-size: 1.4rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .dashboard-page {
+    .heading {
+      .hamburger {
+        display: block;
+      }
+
+      .email,
+      .logout-btn {
+        display: none;
+      }
+    }
+  }
+}
+@media (max-width: 480px) {
+  .dashboard-page {
+    padding: 3.2rem;
+  }
+}
+
+@media (max-width: 392px) {
+  .dashboard-page {
+    .inner-container {
+      .item {
+        font-size: 1.6rem;
+
+        button {
+          font-size: 1.4rem;
+        }
+      }
+
+      p {
+        font-size: 1.6rem;
+      }
+    }
+
+    .heading {
+      .title {
+        font-size: 2rem;
+      }
+    }
+
+    .tertiary-heading {
+      font-size: 1.8rem;
+    }
+
+    .deploy-btn:link,
+    .deploy-btn:visited {
+      padding: 1.6rem 1.2rem;
+
+      span {
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+@media (max-width: 346px) {
+  .dashboard-page {
+    padding: 2.4rem;
+
+    .deploy-btn:link,
+    .deploy-btn:visited {
+      img {
+        width: 16px;
+      }
+
+      span {
+        font-size: 1.4rem;
+      }
+    }
   }
 }

@@ -55,6 +55,7 @@ export { default as Button } from "@/components/Button/Button";
 export { default as Subdomain } from "@/components/Subdomain/Subdomain";
 export { default as Home } from "@/components/Home/Home";
 export { default as SetupForm } from "@/components/SetupForm/SetupForm";
+export { default as Menu } from "@/components/Menu/Menu";
 
 // Helper Functions
 export {
