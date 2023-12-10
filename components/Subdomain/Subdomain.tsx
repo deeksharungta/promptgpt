@@ -28,6 +28,11 @@ const Subdomain: React.FC<SubdomainProps> = ({
     },
   ]);
 
+  const truncateString = (str: string | undefined | null, maxLen: number) =>
+    (str ?? "").length > maxLen
+      ? (str ?? "").slice(0, maxLen) + "..."
+      : str ?? "";
+
   const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setUserMessage(event.target.value);
   };
@@ -49,7 +54,7 @@ const Subdomain: React.FC<SubdomainProps> = ({
       <div className={styles.container}>
         <div className={styles.heading}>
           <h3>{name}</h3>
-          <p>{description}</p>
+          <p title={description}>{truncateString(description, 16)}</p>
         </div>
         <div className={styles["input-output"]}>
           <textarea
