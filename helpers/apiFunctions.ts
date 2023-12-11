@@ -83,7 +83,7 @@ export const handleProjectSubmit = async (
 
 export const chatData = async (
   userMessage: string,
-  key: string | undefined,
+  apiKey: string | undefined,
   messages: any[],
   setLoading: Function,
   setOutput: Function
@@ -93,7 +93,7 @@ export const chatData = async (
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${key}`,
+        Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo",
