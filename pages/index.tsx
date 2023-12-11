@@ -24,7 +24,7 @@ const HomePage: React.FC<HomePageProps> = (props) => {
         name={props.name}
         description={props.description}
         prompt={props.prompt}
-        key={props.key}
+        apiKey={props.key}
       />
     );
   }
