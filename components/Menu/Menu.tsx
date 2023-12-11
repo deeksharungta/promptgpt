@@ -31,10 +31,13 @@ const Menu: React.FC<MenuProps> = ({ onClose }) => {
         <Image src="images/cross.svg" width={20} height={20} alt="cross icon" />
       </button>
       <Link href="/dashboard">Dashboard</Link>
-      <button onClick={logoutHandler} className={styles["logout-btn"]}>
-        Logout{" "}
-        {showSpinner && <Spinner color=" rgba(0, 0, 0, 0.4)" height="16px" />}
-      </button>
+      {!showSpinner ? (
+        <button onClick={logoutHandler} className={styles["logout-btn"]}>
+          Logout
+        </button>
+      ) : (
+        <Spinner color=" rgba(0, 0, 0, 0.4)" height="16px" />
+      )}
     </div>
   );
 };

@@ -118,13 +118,14 @@ const Page: React.FC = () => {
               </button>
             )}
           </header>
-          <Image
-            className={styles.divider}
-            src="images/divider.svg"
-            width={888}
-            height={16}
-            alt="divider"
-          />
+          <div className={styles.divider}>
+            <Image
+              src="images/divider.svg"
+              width={888}
+              height={16}
+              alt="divider"
+            />
+          </div>
           {showEditForm ? (
             <SetupForm
               data={editProjectData}

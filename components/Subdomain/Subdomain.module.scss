@@ -37,6 +37,10 @@
       font-style: normal;
       font-weight: 400;
       line-height: 120%;
+      max-width: 40%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
@@ -182,6 +186,10 @@
 
 @media (max-width: 498px) {
   .wrapper {
+    .logo {
+      margin-bottom: 4.8rem;
+    }
+
     .heading {
       h3 {
         font-size: 2rem;
@@ -191,7 +199,7 @@
 
     .input-output {
       flex-direction: column;
-      height: 32rem;
+      height: 64vh;
 
       .textarea {
         align-items: flex-start;
@@ -201,7 +209,8 @@
 
         .copy-btn {
           padding: 0.6rem 1rem;
-          font-size: 1.2rem;
+          font-size: 1.6rem;
+          top: 4%;
         }
       }
 

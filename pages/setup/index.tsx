@@ -68,13 +68,14 @@ const SetupPage: React.FC = () => {
               </button>
             )}
           </header>
-          <Image
-            className={styles.divider}
-            src="images/divider.svg"
-            width={888}
-            height={16}
-            alt="divider"
-          />
+          <div className={styles.divider}>
+            <Image
+              src="images/divider.svg"
+              width={888}
+              height={16}
+              alt="divider"
+            />
+          </div>
           <SetupForm />
         </div>
       </main>

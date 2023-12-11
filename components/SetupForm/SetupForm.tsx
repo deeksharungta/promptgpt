@@ -125,13 +125,14 @@ const SetupForm: React.FC<SetupFormProps> = ({ data, setShowEditForm }) => {
             initialKey={data?.apiKey || ""}
           />
         </div>
-        <Image
-          className={styles.divider}
-          src="images/divider.svg"
-          width={888}
-          height={16}
-          alt="divider"
-        />
+        <div className={styles.divider}>
+          <Image
+            src="images/divider.svg"
+            width={888}
+            height={16}
+            alt="divider"
+          />
+        </div>
       </div>
       <button
         type="submit"
