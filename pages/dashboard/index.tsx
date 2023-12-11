@@ -99,7 +99,7 @@ const Page: React.FC = () => {
                 />
               </button>
             ) : (
-              <Menu onClose={setShowMenu} />
+              <Menu onClose={setShowMenu} onDashboard={setShowEditForm} />
             )}
             <Link
               href="/dashboard"

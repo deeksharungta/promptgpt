@@ -17,6 +17,7 @@ export type ModalProps = {
 
 export type MenuProps = {
   onClose: (showMenu: boolean) => void;
+  onDashboard?: (showEditForm: boolean) => void;
 };
 
 export type DescriptionProps = {

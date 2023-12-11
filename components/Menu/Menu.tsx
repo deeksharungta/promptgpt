@@ -11,7 +11,7 @@ import {
   MenuProps,
 } from "@/helpers/imports";
 
-const Menu: React.FC<MenuProps> = ({ onClose }) => {
+const Menu: React.FC<MenuProps> = ({ onClose, onDashboard }) => {
   const { updateUserEmail } = useContext(UserContext);
   const router = useRouter();
   const [showSpinner, setShowSpinner] = useState<boolean>(false);
@@ -30,7 +30,14 @@ const Menu: React.FC<MenuProps> = ({ onClose }) => {
       >
         <Image src="images/cross.svg" width={20} height={20} alt="cross icon" />
       </button>
-      <Link href="/dashboard">Dashboard</Link>
+      <Link
+        href="/dashboard"
+        onClick={() => {
+          onDashboard && onDashboard(false);
+        }}
+      >
+        Dashboard
+      </Link>
       {!showSpinner ? (
         <button onClick={logoutHandler} className={styles["logout-btn"]}>
           Logout
