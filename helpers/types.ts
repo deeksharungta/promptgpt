@@ -52,15 +52,12 @@ export type PromptProps = {
 
 export type SetupFormProps = {
   data?: {
-    id: number;
     name: string;
     description: string;
     apiKey: string;
     domain: string;
     prompt: string;
-    userId: number;
   };
-  setShowEditForm?: (show: boolean) => void;
 };
 
 export type SpinnerProps = {

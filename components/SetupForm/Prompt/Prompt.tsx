@@ -37,7 +37,7 @@ const Prompt: React.FC<PromptProps> = ({
         <Link href="#" className={styles.link}>
           Check Examples
           <Image
-            src="images/arrow-right.svg"
+            src="/images/arrow-right.svg"
             width={16}
             height={16}
             alt="arrow-right-icon"

@@ -60,6 +60,8 @@ export default async function handler(
       res.end();
     } catch (err) {
       res.status(401).json({ error: "Invalid token" });
+    } finally {
+      await prisma.$disconnect();
     }
   }
 }

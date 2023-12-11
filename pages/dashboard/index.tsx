@@ -4,13 +4,11 @@ import {
   Loading,
   Menu,
   Project,
-  SetupForm,
   Spinner,
   ToastContainer,
   UserContext,
   fetchUserProjects,
   handleDeleteProject,
-  handleEditProject,
   handleLogout,
   useContext,
   useEffect,
@@ -22,8 +20,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Page: React.FC = () => {
   const { userEmail, updateUserEmail, loading } = useContext(UserContext);
-  const [showEditForm, setShowEditForm] = useState<boolean>(false);
-  const [editProjectData, setEditProjectData] = useState<Project>();
   const [projects, setProjects] = useState<Project[]>([]);
   const [showSpinner, setShowSpinner] = useState<boolean>(false);
   const [loadingProjects, setLoadingProjects] = useState<boolean>(true);
@@ -40,15 +36,6 @@ const Page: React.FC = () => {
 
   const deleteProjectHandler = async (projectId: number) => {
     await handleDeleteProject(projectId, projects, setProjects);
-  };
-
-  const editProjectHandler = async (projectId: number) => {
-    await handleEditProject(
-      projectId,
-      projects,
-      setShowEditForm,
-      setEditProjectData
-    );
   };
 
   if (loading) return <Loading />;
@@ -81,9 +68,7 @@ const Page: React.FC = () => {
 
         <div className={styles["dashboard-page"]}>
           <header className={styles["heading"]}>
-            <h2 className={styles.title}>
-              {showEditForm ? "Edit your PromptGPT" : "Dashboard"}
-            </h2>
+            <h2 className={styles.title}>Dashboard</h2>
             {!showMenu ? (
               <button
                 onClick={() => {
@@ -99,15 +84,9 @@ const Page: React.FC = () => {
                 />
               </button>
             ) : (
-              <Menu onClose={setShowMenu} onDashboard={setShowEditForm} />
+              <Menu onClose={setShowMenu} />
             )}
-            <Link
-              href="/dashboard"
-              className={styles.email}
-              onClick={() => {
-                setShowEditForm(false);
-              }}
-            >
+            <Link href="/dashboard" className={styles.email}>
               {userEmail}
             </Link>
             {showSpinner ? (
@@ -126,62 +105,58 @@ const Page: React.FC = () => {
               alt="divider"
             />
           </div>
-          {showEditForm ? (
-            <SetupForm
-              data={editProjectData}
-              setShowEditForm={setShowEditForm}
-            />
-          ) : (
-            <>
-              <h3 className={styles["tertiary-heading"]}>Deployed PromptGPT</h3>
-              <div className={styles["inner-container"]}>
-                {loadingProjects ? (
-                  <div className={styles.loader}>
-                    <Spinner color=" rgb(255, 255, 255)" height="30px" />
-                  </div>
-                ) : (
-                  <>
-                    {!!projects.length ? (
-                      projects.map((item) => (
-                        <div className={styles.item} key={item.id}>
-                          <Link href={`https://${item.domain}.promptgpt.tools`}>
-                            {item.name}
-                          </Link>
-                          <div>
-                            <button onClick={() => editProjectHandler(item.id)}>
-                              Edit
-                            </button>
-                            <button
-                              onClick={() => deleteProjectHandler(item.id)}
-                            >
-                              Delete
-                            </button>
-                          </div>
-                        </div>
-                      ))
-                    ) : (
-                      <p>No PromptGPT Found!</p>
-                    )}
-                  </>
-                )}
+
+          <h3 className={styles["tertiary-heading"]}>Deployed PromptGPT</h3>
+          <div className={styles["inner-container"]}>
+            {loadingProjects ? (
+              <div className={styles.loader}>
+                <Spinner color=" rgb(255, 255, 255)" height="30px" />
               </div>
-              <Link href="/setup" className={styles["deploy-btn"]}>
-                <Image
-                  src="images/logoIcon.svg"
-                  width={24}
-                  height={24}
-                  alt="logo"
-                />
-                <span>Deploy a PromptGPT</span>
-                <Image
-                  src="images/arrow-right.svg"
-                  width={24}
-                  height={24}
-                  alt="arrow-right"
-                />
-              </Link>
-            </>
-          )}
+            ) : (
+              <>
+                {!!projects.length ? (
+                  projects.map((item) => (
+                    <div className={styles.item} key={item.id}>
+                      <Link href={`https://${item.domain}.promptgpt.tools`}>
+                        {item.name}
+                      </Link>
+                      <div>
+                        <Link
+                          className={styles.action}
+                          href={`update/${item.domain}`}
+                        >
+                          Edit
+                        </Link>
+                        <button
+                          className={styles.action}
+                          onClick={() => deleteProjectHandler(item.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p>No PromptGPT Found!</p>
+                )}
+              </>
+            )}
+          </div>
+          <Link href="/setup" className={styles["deploy-btn"]}>
+            <Image
+              src="images/logoIcon.svg"
+              width={24}
+              height={24}
+              alt="logo"
+            />
+            <span>Deploy a PromptGPT</span>
+            <Image
+              src="images/arrow-right.svg"
+              width={24}
+              height={24}
+              alt="arrow-right"
+            />
+          </Link>
         </div>
       </main>
     );

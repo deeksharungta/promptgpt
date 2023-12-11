@@ -11,13 +11,14 @@ import {
   MenuProps,
 } from "@/helpers/imports";
 
-const Menu: React.FC<MenuProps> = ({ onClose, onDashboard }) => {
+const Menu: React.FC<MenuProps> = ({ onClose }) => {
   const { updateUserEmail } = useContext(UserContext);
   const router = useRouter();
   const [showSpinner, setShowSpinner] = useState<boolean>(false);
 
   const logoutHandler = async () => {
     await handleLogout(setShowSpinner, updateUserEmail, router);
+    onClose(false);
   };
 
   return (
@@ -33,7 +34,7 @@ const Menu: React.FC<MenuProps> = ({ onClose, onDashboard }) => {
       <Link
         href="/dashboard"
         onClick={() => {
-          onDashboard && onDashboard(false);
+          onClose(false);
         }}
       >
         Dashboard

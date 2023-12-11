@@ -28,6 +28,8 @@ export default async function handler(
       res
         .status(403)
         .json({ error: "Error occurred while deleting a Project item." });
+    } finally {
+      await prisma.$disconnect();
     }
   }
 }

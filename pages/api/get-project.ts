@@ -39,5 +39,7 @@ export default async function handler(
     res
       .status(403)
       .json({ error: "Error occurred while fetching project details." });
+  } finally {
+    await prisma.$disconnect();
   }
 }

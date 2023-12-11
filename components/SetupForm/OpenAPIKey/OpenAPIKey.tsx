@@ -40,7 +40,7 @@ const OpenAPIKey: React.FC<OpenAPIKeyProps> = ({
         >
           Where to find
           <Image
-            src="images/arrow-right.svg"
+            src="/images/arrow-right.svg"
             width={16}
             height={16}
             alt="arrow-right-icon"

@@ -63,7 +63,7 @@ function Login() {
             required
           />
           <button type="submit" disabled={loading}>
-            {loading ? <Spinner color="#000" height="30px" /> : "Get Started"}
+            {loading ? <Spinner color="#000" height="28px" /> : "Get Started"}
           </button>
         </form>
       )}

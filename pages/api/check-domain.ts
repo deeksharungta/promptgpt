@@ -35,5 +35,7 @@ export default async function handler(
     res
       .status(500)
       .json({ error: "Error occurred while checking domain existence." });
+  } finally {
+    await prisma.$disconnect();
   }
 }

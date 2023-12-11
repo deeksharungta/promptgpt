@@ -12,6 +12,7 @@ import {
   Spinner,
   handleProjectSubmit,
   useContext,
+  useEffect,
   useRouter,
   useState,
 } from "@/helpers/imports";
@@ -36,6 +37,18 @@ const SetupForm: React.FC<SetupFormProps> = ({ data, setShowEditForm }) => {
     prompt: false,
   });
 
+  useEffect(() => {
+    if (!!data) {
+      setFormValidity({
+        projectName: true,
+        description: true,
+        domain: true,
+        apiKey: true,
+        prompt: true,
+      });
+    }
+  }, []);
+
   const setupFormSubmitHandler = async (e: FormEvent) => {
     e.preventDefault();
     setIsDeploying(true);
@@ -56,12 +69,12 @@ const SetupForm: React.FC<SetupFormProps> = ({ data, setShowEditForm }) => {
       );
       await handleProjectSubmit(data, setShowEditForm, formValues);
       setTimeout(() => {
-        setIsDeploying(false);
         {
           data
             ? router.push(`/dashboard`)
             : router.push(`https://${formValues.domain}.promptgpt.tools`);
         }
+        setIsDeploying(false);
       }, 1000);
     } else {
       console.log("Form is not valid");
@@ -129,7 +142,7 @@ const SetupForm: React.FC<SetupFormProps> = ({ data, setShowEditForm }) => {
         </div>
         <div className={styles.divider}>
           <Image
-            src="images/divider.svg"
+            src="/images/divider.svg"
             width={888}
             height={16}
             alt="divider"
@@ -141,13 +154,12 @@ const SetupForm: React.FC<SetupFormProps> = ({ data, setShowEditForm }) => {
         className={styles["deploy-btn"]}
         disabled={
           isDeploying ||
-          !(
-            formValidity.projectName &&
-            formValidity.description &&
-            formValidity.domain &&
-            formValidity.apiKey &&
-            formValidity.prompt
-          )
+          (!!data &&
+            (!formValidity.projectName ||
+              !formValidity.description ||
+              !formValidity.domain ||
+              !formValidity.apiKey ||
+              !formValidity.prompt))
         }
       >
         {data
@@ -161,7 +173,7 @@ const SetupForm: React.FC<SetupFormProps> = ({ data, setShowEditForm }) => {
           <Spinner color="#000" height="24px" />
         ) : (
           <Image
-            src="images/arrow.svg"
+            src="/images/arrow.svg"
             width={24}
             height={24}
             alt="arrow-right"

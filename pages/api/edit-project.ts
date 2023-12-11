@@ -38,6 +38,8 @@ export default async function handler(
       res
         .status(500)
         .json({ error: "Error occurred while updating the project." });
+    } finally {
+      await prisma.$disconnect();
     }
   } else {
     res.status(405).json({ error: "Method not allowed" });
