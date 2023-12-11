@@ -29,7 +29,12 @@ const Menu: React.FC<MenuProps> = ({ onClose }) => {
           onClose(false);
         }}
       >
-        <Image src="images/cross.svg" width={20} height={20} alt="cross icon" />
+        <Image
+          src="/images/cross.svg"
+          width={20}
+          height={20}
+          alt="cross icon"
+        />
       </button>
       <Link
         href="/dashboard"

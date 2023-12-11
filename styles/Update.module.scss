@@ -5,7 +5,7 @@
   margin-top: 3.3rem;
 }
 
-.dashboard-page {
+.update-page {
   display: flex;
   flex-direction: column;
   margin: 7.97rem auto 0 auto;
@@ -76,73 +76,6 @@
   }
 }
 
-.tertiary-heading {
-  color: #5b5b65;
-  font-family: "Work Sans", sans-serif;
-  font-size: 2rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 120%;
-  margin-top: 3.2rem;
-  margin-bottom: 2.4rem;
-}
-
-.inner-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-
-  .loader {
-    grid-column: 1/-1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .item {
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.8);
-    font-family: "Work Sans", sans-serif;
-    padding: 2.4rem;
-    font-size: 2rem;
-    font-weight: 500;
-    line-height: 120%;
-    display: flex;
-    justify-content: space-between;
-
-    a:hover,
-    a:active {
-      text-decoration: underline;
-    }
-
-    button {
-      cursor: pointer;
-      background: transparent;
-      border: none;
-      margin-left: 0.8rem;
-      color: rgba(255, 255, 255, 0.527);
-      font-family: "Work Sans", sans-serif;
-      font-size: 1.6rem;
-      font-weight: 500;
-      line-height: 120%;
-      text-decoration: underline;
-
-      &:hover {
-        color: #fff;
-      }
-    }
-  }
-
-  p {
-    color: #fff;
-    text-align: center;
-    font-family: "Work Sans", sans-serif;
-    grid-column: 1/-1;
-    font-size: 2rem;
-  }
-}
-
 .deploy-btn:link,
 .deploy-btn:visited {
   padding: 20px 16px;
@@ -190,7 +123,7 @@
 }
 
 @media (max-width: 766px) {
-  .dashboard-page {
+  .update-page {
     margin: 4.8rem auto 0 auto;
     min-height: calc(100vh - 23.8px - 3.3rem - 4.8rem);
 
@@ -212,7 +145,7 @@
 }
 
 @media (max-width: 640px) {
-  .dashboard-page {
+  .update-page {
     .heading {
       .hamburger {
         display: block;
@@ -226,13 +159,13 @@
   }
 }
 @media (max-width: 480px) {
-  .dashboard-page {
+  .update-page {
     padding: 3.2rem;
   }
 }
 
 @media (max-width: 392px) {
-  .dashboard-page {
+  .update-page {
     .inner-container {
       .item {
         font-size: 1.6rem;
@@ -269,7 +202,7 @@
 }
 
 @media (max-width: 346px) {
-  .dashboard-page {
+  .update-page {
     padding: 2.4rem;
 
     .deploy-btn:link,

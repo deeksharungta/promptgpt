@@ -21,13 +21,8 @@ export const handleEmailSubmit = async (email: string): Promise<void> => {
   }
 };
 
-export const handleProjectSubmit = async (
-  data: any,
-  setShowEditForm: any,
-  formValues: any
-) => {
+export const handleProjectSubmit = async (data: any, formValues: any) => {
   if (!!data) {
-    // Edit existing project
     try {
       const response = await fetch("/api/edit-project/", {
         method: "PUT",
@@ -35,7 +30,6 @@ export const handleProjectSubmit = async (
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: data.id,
           name: formValues.projectName,
           description: formValues.description,
           prompt: formValues.prompt,
@@ -45,7 +39,6 @@ export const handleProjectSubmit = async (
       });
 
       if (response.ok) {
-        setShowEditForm && setShowEditForm(false);
         console.log("Project updated successfully");
       } else {
         console.error("Project update failed");

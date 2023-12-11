@@ -17,7 +17,7 @@ import {
   useState,
 } from "@/helpers/imports";
 
-const SetupForm: React.FC<SetupFormProps> = ({ data, setShowEditForm }) => {
+const SetupForm: React.FC<SetupFormProps> = ({ data }) => {
   const { updateSetupDetails } = useContext(SetupContext);
   const router = useRouter();
   const [isDeploying, setIsDeploying] = useState<boolean>(false);
@@ -49,7 +49,7 @@ const SetupForm: React.FC<SetupFormProps> = ({ data, setShowEditForm }) => {
     }
   }, []);
 
-  const setupFormSubmitHandler = async (e: FormEvent) => {
+  const setupFormSubmitHandler = (e: FormEvent) => {
     e.preventDefault();
     setIsDeploying(true);
     if (
@@ -67,7 +67,7 @@ const SetupForm: React.FC<SetupFormProps> = ({ data, setShowEditForm }) => {
         formValues.domain,
         formValues.apiKey
       );
-      await handleProjectSubmit(data, setShowEditForm, formValues);
+      handleProjectSubmit(data, formValues);
       setTimeout(() => {
         {
           data

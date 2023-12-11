@@ -74,7 +74,7 @@ const Page: React.FC = () => {
           </Link>
         </div>
 
-        <div className={styles["dashboard-page"]}>
+        <div className={styles["update-page"]}>
           <header className={styles["heading"]}>
             <h2 className={styles.title}>Edit your PromptGPT</h2>
             {!showMenu ? (

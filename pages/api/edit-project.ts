@@ -10,18 +10,18 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const id = Number(req.body.id);
+  const domain = req.body.domain;
   if (req.method === "PUT") {
     try {
-      if (isNaN(id)) {
-        return res.status(400).json({ error: "Invalid project ID" });
+      if (!domain) {
+        return res.status(400).json({ error: "Invalid domain" });
       }
 
-      const { name, description, prompt, domain, apiKey } = req.body;
+      const { name, description, prompt, apiKey } = req.body;
       const subdomain = domain.toLowerCase();
       const updatedProject = await prisma.project.update({
         where: {
-          id: id,
+          domain: subdomain,
         },
         data: {
           name,
