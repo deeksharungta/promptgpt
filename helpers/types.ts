@@ -71,7 +71,7 @@ export type SubdomainProps = {
   name?: string;
   description?: string;
   prompt?: string;
-  key?: string;
+  apiKey?: string;
 };
 
 export type InputState = {

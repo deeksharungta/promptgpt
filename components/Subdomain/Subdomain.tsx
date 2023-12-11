@@ -14,7 +14,7 @@ const Subdomain: React.FC<SubdomainProps> = ({
   name,
   description,
   prompt,
-  key,
+  apiKey,
 }) => {
   const [copyButtonVisible, setCopyButtonVisible] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false);
@@ -32,13 +32,13 @@ const Subdomain: React.FC<SubdomainProps> = ({
     setUserMessage(event.target.value);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     setMessages((prevMessages) => [
       ...prevMessages,
       { role: "user", content: userMessage },
     ]);
     setLoading(true);
-    await chatData(userMessage, key, messages, setLoading, setOutput);
+    chatData(userMessage, apiKey, messages, setLoading, setOutput);
   };
 
   return (
@@ -48,10 +48,8 @@ const Subdomain: React.FC<SubdomainProps> = ({
       </Link>
       <div className={styles.container}>
         <div className={styles.heading}>
-          <h3>name</h3>
-          <p title={description}>
-            shdcjb jehdwbfv djehwbfuw df ewbjfj ufweig diuegwbui jdx
-          </p>
+          <h3>{name}</h3>
+          <p title={description}>{description}</p>
         </div>
         <div className={styles["input-output"]}>
           <textarea
