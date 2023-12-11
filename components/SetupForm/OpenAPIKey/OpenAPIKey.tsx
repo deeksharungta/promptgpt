@@ -30,7 +30,7 @@ const OpenAPIKey: React.FC<OpenAPIKeyProps> = ({
   return (
     <div className={styles["input-item"]}>
       <div className={styles.heading}>
-        <label htmlFor="key" className={styles.title}>
+        <label htmlFor="apiKey" className={styles.title}>
           Open API Key <span>*</span>
         </label>
         <Link
@@ -51,8 +51,8 @@ const OpenAPIKey: React.FC<OpenAPIKeyProps> = ({
         className={styles.input}
         type="text"
         placeholder="Enter API Key"
-        name="key"
-        id="key"
+        name="apiKey"
+        id="apiKey"
         style={{
           borderColor: keyHasError
             ? apiKeyError === "Verifying.."

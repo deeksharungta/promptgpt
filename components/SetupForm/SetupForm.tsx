@@ -24,7 +24,7 @@ const SetupForm: React.FC<SetupFormProps> = ({ data, setShowEditForm }) => {
     projectName: "",
     description: "",
     domain: "",
-    key: "",
+    apiKey: "",
     prompt: "",
   });
 
@@ -32,7 +32,7 @@ const SetupForm: React.FC<SetupFormProps> = ({ data, setShowEditForm }) => {
     projectName: false,
     description: false,
     domain: false,
-    key: false,
+    apiKey: false,
     prompt: false,
   });
 
@@ -44,7 +44,7 @@ const SetupForm: React.FC<SetupFormProps> = ({ data, setShowEditForm }) => {
       (formValidity.projectName &&
         formValidity.description &&
         formValidity.domain &&
-        formValidity.key &&
+        formValidity.apiKey &&
         formValidity.prompt)
     ) {
       updateSetupDetails(
@@ -52,7 +52,7 @@ const SetupForm: React.FC<SetupFormProps> = ({ data, setShowEditForm }) => {
         formValues.description,
         formValues.prompt,
         formValues.domain,
-        formValues.key
+        formValues.apiKey
       );
       await handleProjectSubmit(data, setShowEditForm, formValues);
       setTimeout(() => {
@@ -120,8 +120,10 @@ const SetupForm: React.FC<SetupFormProps> = ({ data, setShowEditForm }) => {
             initialDomain={data?.domain || ""}
           />
           <OpenAPIKey
-            onKeyChange={(value) => handleInputChange("key", value)}
-            onValidityChange={(isValid) => handleValidityChange("key", isValid)}
+            onKeyChange={(value) => handleInputChange("apiKey", value)}
+            onValidityChange={(isValid) =>
+              handleValidityChange("apiKey", isValid)
+            }
             initialKey={data?.apiKey || ""}
           />
         </div>
@@ -143,7 +145,7 @@ const SetupForm: React.FC<SetupFormProps> = ({ data, setShowEditForm }) => {
             formValidity.projectName &&
             formValidity.description &&
             formValidity.domain &&
-            formValidity.key &&
+            formValidity.apiKey &&
             formValidity.prompt
           )
         }

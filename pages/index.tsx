@@ -24,7 +24,7 @@ const HomePage: React.FC<HomePageProps> = (props) => {
         name={props.name}
         description={props.description}
         prompt={props.prompt}
-        apiKey={props.key}
+        apiKey={props.apiKey}
       />
     );
   }
@@ -39,7 +39,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     subdomain != "www"
       ? subdomain != "[::1]:50369"
         ? subdomain
-        : "abc"
+        : "notFound"
       : "home";
   if (subdomain === "home") {
     return {

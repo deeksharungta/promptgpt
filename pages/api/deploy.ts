@@ -14,7 +14,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const { name, description, prompt, domain, key } = req.body;
+    const { name, description, prompt, domain, apiKey } = req.body;
 
     const cookies = parse(req.headers.cookie || "");
     const uuidValue = cookies.auth;
@@ -48,7 +48,7 @@ export default async function handler(
           description,
           prompt,
           domain: subdomain,
-          apiKey: key,
+          apiKey: apiKey,
           userId: userId,
         },
       });

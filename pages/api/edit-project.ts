@@ -17,7 +17,7 @@ export default async function handler(
         return res.status(400).json({ error: "Invalid project ID" });
       }
 
-      const { name, description, prompt, domain, key } = req.body;
+      const { name, description, prompt, domain, apiKey } = req.body;
       const subdomain = domain.toLowerCase();
       const updatedProject = await prisma.project.update({
         where: {
@@ -28,7 +28,7 @@ export default async function handler(
           description,
           prompt,
           domain: subdomain,
-          apiKey: key,
+          apiKey: apiKey,
         },
       });
 

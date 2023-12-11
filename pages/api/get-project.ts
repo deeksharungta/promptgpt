@@ -33,7 +33,7 @@ export default async function handler(
       description: projectDetails.description,
       prompt: projectDetails.prompt,
       domain: projectDetails.domain,
-      key: projectDetails.apiKey,
+      apiKey: projectDetails.apiKey,
     });
   } catch (error) {
     res

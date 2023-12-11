@@ -40,7 +40,7 @@ export const handleProjectSubmit = async (
           description: formValues.description,
           prompt: formValues.prompt,
           domain: formValues.domain,
-          key: formValues.key,
+          apiKey: formValues.apiKey,
         }),
       });
 
@@ -66,7 +66,7 @@ export const handleProjectSubmit = async (
           description: formValues.description,
           prompt: formValues.prompt,
           domain: formValues.domain,
-          key: formValues.key,
+          apiKey: formValues.apiKey,
         }),
       });
 
@@ -123,7 +123,7 @@ export const chatData = async (
 };
 
 export const isAPIKeyValid = async (
-  key: string,
+  apiKey: string,
   setApiKeyError: Function
 ): Promise<boolean> => {
   try {
@@ -132,7 +132,7 @@ export const isAPIKeyValid = async (
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${key}`,
+        Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
         model: "gpt-3.5-turbo",
@@ -291,9 +291,9 @@ export const fetchProjectData = async (
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/get-project?domain=${subdomain}`
     );
     if (response.ok) {
-      const { name, description, prompt, domain, key }: ProjectData =
+      const { name, description, prompt, domain, apiKey }: ProjectData =
         await response.json();
-      return { name, description, prompt, domain, key };
+      return { name, description, prompt, domain, apiKey };
     } else {
       console.error("Error fetching project");
       return null;

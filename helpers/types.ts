@@ -99,7 +99,7 @@ export type ProjectData = {
   description: string;
   prompt: string;
   domain: string;
-  key: string;
+  apiKey: string;
 };
 
 export type HomePageProps = {
@@ -107,7 +107,7 @@ export type HomePageProps = {
   description?: string;
   prompt?: string;
   domain?: string;
-  key?: string;
+  apiKey?: string;
   subdomain?: string;
 };
 
@@ -117,14 +117,14 @@ export type SetupContextType = {
     description: string | null;
     prompt: string | null;
     domain: string | null;
-    key: string | null;
+    apiKey: string | null;
   };
   updateSetupDetails: (
     name: string | null,
     description: string | null,
     prompt: string | null,
     domain: string | null,
-    key: string | null
+    apiKey: string | null
   ) => void;
 };
 

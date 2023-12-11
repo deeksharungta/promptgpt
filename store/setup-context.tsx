@@ -12,9 +12,9 @@ const initialSetupContext: SetupContextType = {
     description: "",
     prompt: "",
     domain: "",
-    key: "",
+    apiKey: "",
   },
-  updateSetupDetails: (name, description, prompt, domain, key) => {},
+  updateSetupDetails: (name, description, prompt, domain, apiKey) => {},
 };
 
 export const SetupContext =
@@ -38,14 +38,14 @@ export default function SetupContextProvider({
     description: string | null,
     prompt: string | null,
     domain: string | null,
-    key: string | null
+    apiKey: string | null
   ) {
     setSetupDetails({
       name,
       description,
       prompt,
       domain,
-      key,
+      apiKey,
     });
   }
 
