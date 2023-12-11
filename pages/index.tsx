@@ -11,7 +11,7 @@ import styles from "@/styles/Home.module.scss";
 const HomePage: React.FC<HomePageProps> = (props) => {
   if (props.subdomain === "home") {
     return <Home />;
-  } else if (props.subdomain === "abc" || props.subdomain === "notFound") {
+  } else if (props.subdomain === "notFound") {
     return (
       <div className={styles["not-found"]}>
         <h3>No PromptGPT found!</h3>
