@@ -15,8 +15,8 @@ export default async function handler(
     const transporter = nodemailer.createTransport({
       service: "Gmail",
       auth: {
-        user: "rungtadeeksha@gmail.com",
-        pass: "cdmo teiz iosk pxdd",
+        user: process.env.EMAIL_ADDRESS,
+        pass: process.env.EMAIL_PASSWORD,
       },
     });
 
@@ -30,7 +30,7 @@ export default async function handler(
       <p>Click <a href="https://www.promptgpt.tools/verify-email/?token=${token}">here</a> to log in.</p>
       <p>Please note that the magic link will expire in 15 minutes for security reasons.</p>
       <p>If you didn't request this login, you can ignore this email.</p>
-      <p>Best regards,<br/>PromptGPT</p>
+      <p>Best regards,<br/><strong>PromptGPT</strong></p>
     `,
     };
 
