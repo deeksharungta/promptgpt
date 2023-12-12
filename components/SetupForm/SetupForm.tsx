@@ -74,8 +74,8 @@ const SetupForm: React.FC<SetupFormProps> = ({ data }) => {
             ? router.push(`/dashboard`)
             : router.push(`https://${formValues.domain}.promptgpt.tools`);
         }
-        setIsDeploying(false);
       }, 1000);
+      setIsDeploying(false);
     } else {
       console.log("Form is not valid");
       setIsDeploying(false);
@@ -155,6 +155,12 @@ const SetupForm: React.FC<SetupFormProps> = ({ data }) => {
         disabled={
           isDeploying ||
           (!!data &&
+            (!formValidity.projectName ||
+              !formValidity.description ||
+              !formValidity.domain ||
+              !formValidity.apiKey ||
+              !formValidity.prompt)) ||
+          (!data &&
             (!formValidity.projectName ||
               !formValidity.description ||
               !formValidity.domain ||

@@ -54,6 +54,11 @@ const useDomain = (initialValue?: string) => {
       setValueIsValid(false);
       return;
     }
+    if (inputState.value.trim() === "www") {
+      setErrorMessage("Invalid domain name");
+      setValueIsValid(false);
+      return;
+    }
     if (!isValidSubdomain(inputState.value.trim())) {
       setErrorMessage("Invalid format");
       setValueIsValid(false);

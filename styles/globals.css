@@ -29,3 +29,14 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+input {
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s !important;
+    -webkit-text-fill-color: #fff !important;
+    caret-color: #fff !important;
+  }
+}
