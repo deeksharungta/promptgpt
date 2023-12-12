@@ -4,6 +4,7 @@
   align-items: center;
   flex-direction: column;
   background: rgba(0, 0, 0, 0.3);
+  padding-bottom: 3.6rem;
 
   .logo {
     margin: 3.3rem 0 6.3rem 0;
@@ -53,6 +54,7 @@
     position: relative;
 
     .textarea {
+      position: relative;
       padding: 2.4rem;
       background: #111113;
       // backdrop-filter: blur(250px);
@@ -119,7 +121,6 @@
       z-index: 1;
       mix-blend-mode: overlay;
       user-select: none;
-      // opacity: 40%;
     }
   }
 
