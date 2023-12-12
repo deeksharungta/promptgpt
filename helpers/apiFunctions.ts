@@ -89,7 +89,7 @@ export const chatData = async (
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: "gpt-3.5-turbo",
+        model: "gpt-4",
         messages: [...messages, { role: "user", content: userMessage }],
         temperature: 0.7,
       }),
