@@ -34,7 +34,11 @@ const Prompt: React.FC<PromptProps> = ({
         <label htmlFor="prompt" className={styles.title}>
           Personalized Prompt <span>*</span>
         </label>
-        <Link href="#" className={styles.link}>
+        <Link
+          href="https://early-drive-d38.notion.site/Prompts-Example-b2ebb1773a55416d85ce30296d085216"
+          target="_blank"
+          className={styles.link}
+        >
           Check Examples
           <Image
             src="/images/arrow-right.svg"
