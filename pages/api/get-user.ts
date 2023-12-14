@@ -23,8 +23,8 @@ export default async function handler(
       return res.status(401).json({ error: "Unauthorized" });
     }
 
-    const decodedToken = jwt.verify(sessionToken, jwtSecret) as {
-      email: { email: string };
+    const decodedToken = jwt.verify(String(sessionToken), jwtSecret) as {
+      email?: { email: string };
     };
 
     if (!decodedToken || !decodedToken.email || !decodedToken.email.email) {
