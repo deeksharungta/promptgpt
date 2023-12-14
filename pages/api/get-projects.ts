@@ -22,7 +22,7 @@ export default async function handler(
     return res.status(401).json({ error: "Unauthorized" });
   }
 
-  const email = jwt.verify(sessionToken, jwtSecret) as {
+  const email = jwt.verify(String(sessionToken), jwtSecret) as {
     email: {
       email: string;
     };
