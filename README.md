@@ -1,4 +1,4 @@
-# Custom ChatGPT Creation Platform
+# PromptGPT
 
 A Next.js web application allowing users to create personalized ChatGPT instances with unique subdomains. This project utilizes Prisma and Supabase for efficient backend operations and database management, implements a secure Magic Link authentication system from scratch for session safety using cookies, and integrates Redis for robust session token management.
 
