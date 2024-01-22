@@ -82,16 +82,15 @@ export const chatData = async (
   setOutput: Function
 ) => {
   try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    const response = await fetch("/api/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: "gpt-4",
-        messages: [...messages, { role: "user", content: userMessage }],
-        temperature: 0.7,
+        messages,
+        apiKey,
+        userMessage,
       }),
     });
 
@@ -121,20 +120,18 @@ export const isAPIKeyValid = async (
 ): Promise<boolean> => {
   try {
     setApiKeyError("Verifying..");
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    const response = await fetch("/api/verify-api-key", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [{ role: "system", content: "You are a helpful assistant." }],
-        temperature: 0.7,
+        apiKey,
       }),
     });
 
     const result = await response.json();
+
     if (result.error) {
       if (result.error.code === "invalid_api_key")
         setApiKeyError("API Key is not valid");
