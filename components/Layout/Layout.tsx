@@ -7,6 +7,10 @@ export default function Layout({ children }: LayoutProps) {
       <main className={styles.main}>
         <Head>
           <title>PromptGPT</title>
+          <meta
+            name="description"
+            content="PromptGPT is a web application created with NextJS, allowing users to make their own customized ChatGPTs with a unique subdomain."
+          />
         </Head>
         {children}
       </main>
