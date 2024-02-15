@@ -13,7 +13,7 @@ export default function Document() {
         />
         <meta
           property="og:image"
-          content="https://opengraph.b-cdn.net/production/documents/06f4a25d-d317-42bd-ac1e-697bbb875974.png?token=45K9MJBt_k6uWHeN9wKOzpVHP0RHXdL0-M9p_CAlHT8&height=630&width=1200&expires=33244022517"
+          content="https://opengraph.b-cdn.net/production/documents/5d07f8a6-ba03-44c2-b540-d5afd5726d3d.png?token=sxIE0jliB1NioWb-6us-AOoCu115p5LxTPcswjt3Nws&height=630&width=1200&expires=33244023486"
         />
 
         <meta name="twitter:card" content="summary_large_image" />
@@ -26,7 +26,7 @@ export default function Document() {
         />
         <meta
           name="twitter:image"
-          content="https://opengraph.b-cdn.net/production/documents/06f4a25d-d317-42bd-ac1e-697bbb875974.png?token=45K9MJBt_k6uWHeN9wKOzpVHP0RHXdL0-M9p_CAlHT8&height=630&width=1200&expires=33244022517"
+          content="https://opengraph.b-cdn.net/production/documents/5d07f8a6-ba03-44c2-b540-d5afd5726d3d.png?token=sxIE0jliB1NioWb-6us-AOoCu115p5LxTPcswjt3Nws&height=630&width=1200&expires=33244023486"
         />
       </Head>
       <body>
