@@ -1,15 +1,9 @@
+import React, { useState } from "react";
 import styles from "./Login.module.scss";
-import {
-  FormEvent,
-  Spinner,
-  handleEmailSubmit,
-  useInput,
-  useState,
-} from "@/helpers/imports";
+import { FormEvent, handleEmailSubmit, useInput } from "@/helpers/imports";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const emailValidityCheck = (value: string) =>
-  value.trim() !== "" && emailPattern.test(value);
+const emailValidityCheck = (value: string) => value.trim() !== "" && emailPattern.test(value);
 
 function Login() {
   const [loading, setLoading] = useState(false);
@@ -27,6 +21,7 @@ function Login() {
   const loginFormSubmitHandler = (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
     setTimeout(() => {
       setLoading(false);
       setShowFeedback(true);
@@ -42,7 +37,7 @@ function Login() {
     <>
       {showFeedback ? (
         <div className={styles.feedback}>
-          Check you email inbox
+          Check your email inbox
           <br />
           You should receive a magic link to login
         </div>
@@ -67,11 +62,10 @@ function Login() {
           </button>
         </form>
       )}
-      {emailHasError && (
-        <p className={styles["error-message"]}>Please enter a valid email</p>
-      )}
+      {emailHasError && <p className={styles["error-message"]}>Please enter a valid email</p>}
     </>
   );
 }
 
 export default Login;
+
